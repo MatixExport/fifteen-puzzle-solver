@@ -17,7 +17,11 @@ class Board:
     def generate_random(self):
         self.table = np.arange(self.width * self.height)
         random.shuffle(self.table)
-        self.table = np.reshape(self.table, (self.width, self.height))
+        self.table = np.reshape(self.table, (self.height, self.width))
+        self.find_empty_index()
+
+    def set_table(self, table):
+        self.table = table
         self.find_empty_index()
 
     def find_empty_index(self):
@@ -41,3 +45,26 @@ class Board:
             temp["U"] = (self.empty_field_index.x, self.empty_field_index.y + 1)
 
         return temp
+
+    def move(self, x, y):
+        self.find_empty_index()
+        self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[y,x] = self.table[y,x], self.table[self.empty_field_index.y, self.empty_field_index.x]
+
+    def is_solved(self):
+        self.find_empty_index()
+
+        if not np.all(self.table[:-1,0] < self.table[1:,0]):
+            return False
+        for row in self.table[:-1]:
+            if not np.all(row[:-1] < row[1:]):
+                return False
+        if self.table[-1,-1] == 0:
+            last_row = self.table[-1]
+            return np.all(last_row[:-2] < last_row[1:-1])
+        return False
+
+
+
+    def recurse(self, depth):
+        if depth == 20:
+            return False
