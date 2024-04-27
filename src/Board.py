@@ -136,4 +136,4 @@ class Board:
 
             for move in reversed(moves):
                 self.move(move)
-            self.move(original_position)
+
