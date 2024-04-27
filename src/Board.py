@@ -67,18 +67,25 @@ class Board:
             return np.all(temp[:-2] < temp[1:-1])
         return False
 
+
     def recurse(self, depth, prohibited_move):
         if self.is_solved():
             return True
-        if depth < 2:
+        if depth < 100:
             for move in self.get_available_moves().values():
                 if move != prohibited_move:
                     print("rect")
                     print(self)
                     self.move(move)
-                    if self.recurse(depth + 1, self.empty_field_index):
+                    print("Robie Ruch: z",self.empty_field_index)
+                    print("\n Do: ",move)
+                    original_position = Index(self.empty_field_index.x,self.empty_field_index.y)
+                    if self.recurse(depth + 1, original_position):
                         return True
-                    self.move(self.empty_field_index)
+                    self.move(original_position)
+                    print("Odwracam Ruch do", original_position)
                     print(self)
+                else:
+                    print("Move prohibited")
             return False
         return False

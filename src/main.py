@@ -15,3 +15,4 @@ if __name__ == "__main__":
 
     print(board)
     print(board.is_solved())
+    print(board)

@@ -5,3 +5,8 @@ class Index:
 
     def __str__(self):
         return "x=%d, y=%d" % (self.x, self.y)
+
+    def __eq__(self, other):
+        if not isinstance(other, Index):
+            return False
+        return self.x == other.x and self.y == other.y
