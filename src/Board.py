@@ -64,31 +64,9 @@ class Board:
             return np.all(temp[:-2] < temp[1:-1])
         return False
 
-    def depth_recursion(self, depth, prohibited_move):
-        if self.is_solved():
-            return True
-        # i=0
-        if depth < 15:
-            for move in self.get_available_moves().values():
-                # print(i)
-                if move != prohibited_move:
-                    # i+=1
-                    # print(self)
-                    self.move(move)
-                    # print("Robie Ruch: z",self.empty_field_index)
-                    # print("Do: ",move)
-                    original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
 
-                    if self.depth_recursion(depth + 1, original_position):
-                        return True
-                    # print("Odwracam Ruch do", original_position, "\n")
-                    self.move(original_position)
-                    #
-                    # print(self)
-                # else:
-                #     print("Move prohibited: ", prohibited_move)
-            return False
-        return False
+
+
 
     def hamming_dist(self):
         temp = np.reshape(self.table, (self.width * self.height))
@@ -113,32 +91,7 @@ class Board:
                 sum += abs(correct_row - row) + abs(correct_col - col)
         return sum
 
-    def check_level(self, prohibited_move):
-        for move in self.get_available_moves().values():
-            if move != prohibited_move:
-                original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
-                self.move(move)
 
-                if self.is_solved():
-                    return True
-                self.move(original_position)
-
-        return False
-
-    def wide_search(self, prohibited_move):
-        if self.is_solved():
-            return True
-
-        if self.check_level(prohibited_move):
-            return True
-
-        for move in self.get_available_moves().values():
-            original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
-            self.move(move)
-
-            if self.check_level(original_position):
-                return True
-            self.move(original_position)
 
     def bfs(self):
         que = deque()
