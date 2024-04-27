@@ -143,10 +143,10 @@ class Board:
                     if pos_move != original_position:
                         original_position2 = Index(self.empty_field_index.x,self.empty_field_index.y)
                         self.move(pos_move)
-                        que.append(copy.deepcopy(self.table))
+                        que.append((self.table_as_tuple(),og_tab[1]+letter))
                         self.move(original_position2)
 
-            self.table = og_tab_copy
+            self.table = np.asarray(og_tab[0])
 
     def make_moves(self, moves):
         for move in moves:
