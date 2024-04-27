@@ -53,15 +53,6 @@ class Board:
             index.y, index.x], self.table[self.empty_field_index.y, self.empty_field_index.x]
 
     def is_solved(self):
-        # if not np.all(self.table[:-1,0] < self.table[1:,0]):
-        #     return False
-        # for row in self.table[:-1]:
-        #     if not np.all(row[:-1] < row[1:]):
-        #         return False
-        # if self.table[-1,-1] == 0:
-        #     last_row = self.table[-1]
-        #     return np.all(last_row[:-2] < last_row[1:-1])
-        # return False
         temp = np.reshape(self.table, (self.width * self.height))
         if temp[-1] == 0:
             return np.all(temp[:-2] < temp[1:-1])
@@ -71,21 +62,24 @@ class Board:
     def recurse(self, depth, prohibited_move):
         if self.is_solved():
             return True
-        if depth < 100:
+        # i=0
+        if depth < 15:
             for move in self.get_available_moves().values():
                 if move != prohibited_move:
-                    print("rect")
-                    print(self)
+                    # i+=1
+                    # print(self)
                     self.move(move)
-                    print("Robie Ruch: z",self.empty_field_index)
-                    print("\n Do: ",move)
-                    original_position = Index(self.empty_field_index.x,self.empty_field_index.y)
-                    if self.recurse(depth + 1, original_position):
+                    # print("Robie Ruch: z",self.empty_field_index)
+                    # print("Do: ",move)
+                    original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+
+                    if self.depth_recursion(depth + 1, original_position):
                         return True
+                    # print("Odwracam Ruch do", original_position, "\n")
                     self.move(original_position)
-                    print("Odwracam Ruch do", original_position)
-                    print(self)
-                else:
-                    print("Move prohibited")
+                    #
+                    # print(self)
+                # else:
+                #     print("Move prohibited: ", prohibited_move)
             return False
         return False
