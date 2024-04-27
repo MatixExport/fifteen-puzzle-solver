@@ -173,12 +173,14 @@ class Board:
         for move in reversed(moves):
             self.move(move)
 
+
+
+
+
     def a_star(self, h):
         start = [self.empty_field_index]
         open_set = PriorityQueue()
         open_set.put((h(),start))
-        empty_index = Index(self.empty_field_index.x,self.empty_field_index.y)
-        origin = None
         # cena dotarcia do danego stanu boarda
         gscore = {str(self.table.flatten()): 0}
         # cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
@@ -186,18 +188,26 @@ class Board:
 
         while not open_set.empty():
             current = open_set.get()[1]
-
             self.make_moves(current)
 
-
-
             if self.is_solved():
-                return True
+                self.reverse_moves(current)
+                result_string = ""
+                for move in current[1:]:
+
+                    dic = self.get_available_moves()
+                    value = list(dic.keys())[list(dic.values()).index(move)]
+                    self.move(move)
+                    result_string += value
+                return result_string
+
+
+
 
             current_gscore = gscore[str(self.table.flatten())]
 
             for move in self.get_available_moves().values():
-                self.empty_field_index = empty_index
+
                 original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
                 self.move(move)
 
