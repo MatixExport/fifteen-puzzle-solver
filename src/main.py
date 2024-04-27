@@ -7,6 +7,7 @@ if __name__ == "__main__":
     board = Board(4, 4)
     board2 = Board(3, 3)
     board3 = Board(3, 3)
+    board4 = Board(3, 3)
 
 
 
@@ -18,5 +19,5 @@ if __name__ == "__main__":
 
 
 
-    board3.bfs()
-    print(board3)
+    board4.bfs()
+    print(board4)
