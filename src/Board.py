@@ -41,7 +41,6 @@ class Board:
         return str(self.table)
 
     def get_available_moves(self):
-        self.find_empty_index()
         temp = {}
         if self.empty_field_index.x - 1 >= 0:
             temp["L"] = Index(self.empty_field_index.x - 1, self.empty_field_index.y)
@@ -55,9 +54,9 @@ class Board:
         return temp
 
     def move(self, index):
-        self.find_empty_index()
         self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[index.y, index.x] = self.table[
             index.y, index.x], self.table[self.empty_field_index.y, self.empty_field_index.x]
+        self.empty_field_index = index
 
     def is_solved(self):
         temp = np.reshape(self.table, (self.width * self.height))
