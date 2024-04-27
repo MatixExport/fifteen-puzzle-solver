@@ -10,3 +10,7 @@ class Index:
         if not isinstance(other, Index):
             return False
         return self.x == other.x and self.y == other.y
+
+    def __cmp__(self, other):
+        return 1
+

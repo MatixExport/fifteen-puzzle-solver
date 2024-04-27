@@ -18,9 +18,12 @@ if __name__ == "__main__":
     board4.set_table(np.array([[1, 5, 0], [4, 3, 2], [7, 8, 6]]))
     board4.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
 
+    print(board4.a_star(board4.hamming_dist()))
+
+    # print(board3.manhattan_dist())
+    # print(board3.hamming_dist())
+    print(board4)
 
 
-    board4.bfs()
-    print(board3.manhattan_dist())
-    print(board3.hamming_dist())
-    # print(board4)
+
+

@@ -184,7 +184,8 @@ class Board:
         fscore = {self.table:h()}
 
         while not open_set.empty():
-            current = open_set.get()
+            current = open_set.get()[1]
+
             self.make_moves(current)
             if self.is_solved():
                 return True
@@ -192,11 +193,14 @@ class Board:
             for move in self.get_available_moves().values():
                 original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
                 self.move(move)
-                path = current.copy().extend(move)
-                current_gscore = gscore[self.table]
-                if path not in gscore:
-                    gscore[path] = float('inf')
 
+
+                path = copy.deepcopy(current).copy()
+                path.append(move)
+
+
+                if not str(self.table.flatten()) in gscore:
+                    gscore[str(self.table.flatten())] = float('inf')
 
 
                 self.move(original_position)
