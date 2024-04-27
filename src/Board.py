@@ -3,15 +3,17 @@ import random
 
 import numpy as np
 from collections import deque
+import heapq
+from queue import PriorityQueue
 
 from src.Index import Index
 
 
 class Board:
 
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+    def __init__(self):
+        self.width = 0
+        self.height = 0
         self.iteration = 0
         self.table = None
         self.empty_field_index = Index(0, 0)
@@ -23,6 +25,8 @@ class Board:
         self.find_empty_index()
 
     def set_table(self, table):
+        self.height = len(table)
+        self.width = len(table[0])
         self.table = table
         self.find_empty_index()
 
@@ -86,15 +90,14 @@ class Board:
             return False
         return False
 
-
     def hamming_dist(self):
         temp = np.reshape(self.table, (self.width * self.height))
-        solved = [i for i in range(len(temp)-1)]
+        solved = [i for i in range(len(temp) - 1)]
         solved.append(0)
         hamming = 0
-        for i,j in zip(solved,temp):
-            if i!=j:
-                hamming +=1
+        for i, j in zip(solved, temp):
+            if i != j:
+                hamming += 1
         return hamming
 
     def manhattan_dist(self):
@@ -102,10 +105,10 @@ class Board:
         for row in range(self.height):
             for col in range(self.width):
                 val = self.table[row][col]
-                correct_row = math.ceil(val/self.height) -1
-                correct_col = (val - correct_row*self.height)-1
+                correct_row = math.ceil(val / self.height) - 1
+                correct_col = (val - correct_row * self.height) - 1
                 if val == 0:
-                    correct_row = self.height -1
+                    correct_row = self.height - 1
                     correct_col = self.width - 1
                 sum += abs(correct_row - row) + abs(correct_col - col)
         return sum
@@ -163,4 +166,48 @@ class Board:
 
             for move in reversed(moves):
                 self.move(move)
+
+
+    def make_moves(self,moves):
+        pass
+    def reverse_moves(self,moves):
+        pass
+    def a_star(self,h):
+        start = [self.empty_field_index]
+        open_set = PriorityQueue()
+        open_set.put((h(),start))
+
+        origin = None
+        #cena dotarcia do danego stanu boarda
+        gscore = {self.table: 0}
+        #cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
+        fscore = {self.table:h()}
+
+        while not open_set.empty():
+            current = open_set.get()
+            self.make_moves(current)
+            if self.is_solved():
+                return True
+
+            for move in self.get_available_moves().values():
+                original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+                self.move(move)
+                path = current.copy().extend(move)
+                current_gscore = gscore[self.table]
+                if path not in gscore:
+                    gscore[path] = float('inf')
+
+
+
+                self.move(original_position)
+
+            self.reverse_moves(current)
+
+
+
+
+
+
+
+
 
