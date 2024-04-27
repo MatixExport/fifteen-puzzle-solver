@@ -1,6 +1,7 @@
 import random
 
 import numpy as np
+from collections import deque
 
 from src.Index import Index
 
@@ -84,4 +85,55 @@ class Board:
             return False
         return False
 
+    def check_level(self, prohibited_move):
+        for move in self.get_available_moves().values():
+            if move != prohibited_move:
+                original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+                self.move(move)
 
+                if self.is_solved():
+                    return True
+                self.move(original_position)
+
+        return False
+
+    def wide_search(self, prohibited_move):
+        if self.is_solved():
+            return True
+
+        if self.check_level(prohibited_move):
+            return True
+
+        for move in self.get_available_moves().values():
+            original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+            self.move(move)
+
+            if self.check_level(original_position):
+                return True
+            self.move(original_position)
+
+    def bfs(self):
+        que = deque()
+
+        for move in self.get_available_moves().values():
+            que.append([move])
+
+        while len(que) > 0:
+            moves = que.popleft()
+
+            original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+            for move in moves:
+                self.move(move)
+            if self.is_solved():
+                return True
+            pos_moves = self.get_available_moves().values()
+            if len(pos_moves) > 0:
+                for pos_move in pos_moves:
+                    if pos_move != original_position:
+                        moves.append(pos_move)
+                        que.append(moves)
+                        moves = moves[:-1]
+
+            for move in reversed(moves):
+                self.move(move)
+            self.move(original_position)
