@@ -58,13 +58,13 @@ class Board:
             return np.all(temp[:-2] < temp[1:-1])
         return False
 
-
-    def recurse(self, depth, prohibited_move):
+    def depth_recursion(self, depth, prohibited_move):
         if self.is_solved():
             return True
         # i=0
         if depth < 15:
             for move in self.get_available_moves().values():
+                # print(i)
                 if move != prohibited_move:
                     # i+=1
                     # print(self)
@@ -83,3 +83,5 @@ class Board:
                 #     print("Move prohibited: ", prohibited_move)
             return False
         return False
+
+
