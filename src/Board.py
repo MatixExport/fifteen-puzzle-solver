@@ -124,6 +124,36 @@ class Board:
         for move,letter in zip(avail_moves.values(), avail_moves.keys()):
             original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
             self.move(move)
+            que.append(copy.deepcopy({'board': copy.deepcopy(self.table), 'path': letter}))
+            self.move(original_position)
+
+        while que:
+            og_tab = que.popleft()
+            self.table = og_tab
+            og_tab_copy = copy.deepcopy(og_tab)
+            self.find_empty_index()
+            original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+            if self.is_solved():
+                # while que:
+                #     print(que.popleft())
+                return True
+            pos_moves = self.get_available_moves().values()
+            if len(pos_moves) > 0:
+                for pos_move in pos_moves:
+                    if pos_move != original_position:
+                        original_position2 = Index(self.empty_field_index.x,self.empty_field_index.y)
+                        self.move(pos_move)
+                        que.append(copy.deepcopy(self.table))
+                        self.move(original_position2)
+
+            self.table = og_tab_copy
+
+    def bfs2(self):
+        que = deque()
+        avail_moves = self.get_available_moves()
+        for move,letter in zip(avail_moves.values(), avail_moves.keys()):
+            original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
+            self.move(move)
 
             que.append(copy.deepcopy({'board': copy.deepcopy(self.table), 'path': letter}))
             self.move(original_position)
