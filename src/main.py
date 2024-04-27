@@ -1,15 +1,17 @@
 import numpy as np
 
 from Board import Board
+from src.Index import Index
 
 if __name__ == "__main__":
-    board = Board(2,2)
+    board = Board(2, 2)
 
     board.generate_random()
-    # print(board)
-    # print(board.find_empty_index())
-    # print(board.get_available_moves())
-    # print(board.move(1,1))
-    board.set_table(np.array([[2,3],[ 1,0]]))
+
+    board.set_table(np.array([[1,3], [2, 0]]))
+    print(board.is_solved())
+
+    board.recurse(1,None)
+
     print(board)
     print(board.is_solved())

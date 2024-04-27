@@ -34,37 +34,51 @@ class Board:
         return str(self.table)
 
     def get_available_moves(self):
+        self.find_empty_index()
         temp = {}
         if self.empty_field_index.x - 1 >= 0:
-            temp["L"] = (self.empty_field_index.x - 1, self.empty_field_index.y)
+            temp["L"] = Index(self.empty_field_index.x - 1, self.empty_field_index.y)
         if self.empty_field_index.x + 1 <= self.width - 1:
-            temp["R"] = (self.empty_field_index.x + 1, self.empty_field_index.y)
+            temp["R"] = Index(self.empty_field_index.x + 1, self.empty_field_index.y)
         if self.empty_field_index.y - 1 >= 0:
-            temp["D"] = (self.empty_field_index.x, self.empty_field_index.y - 1)
+            temp["D"] = Index(self.empty_field_index.x, self.empty_field_index.y - 1)
         if self.empty_field_index.y + 1 <= self.height - 1:
-            temp["U"] = (self.empty_field_index.x, self.empty_field_index.y + 1)
+            temp["U"] = Index(self.empty_field_index.x, self.empty_field_index.y + 1)
 
         return temp
 
-    def move(self, x, y):
+    def move(self, index):
         self.find_empty_index()
-        self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[y,x] = self.table[y,x], self.table[self.empty_field_index.y, self.empty_field_index.x]
+        self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[index.y, index.x] = self.table[
+            index.y, index.x], self.table[self.empty_field_index.y, self.empty_field_index.x]
 
     def is_solved(self):
-        self.find_empty_index()
-
-        if not np.all(self.table[:-1,0] < self.table[1:,0]):
-            return False
-        for row in self.table[:-1]:
-            if not np.all(row[:-1] < row[1:]):
-                return False
-        if self.table[-1,-1] == 0:
-            last_row = self.table[-1]
-            return np.all(last_row[:-2] < last_row[1:-1])
+        # if not np.all(self.table[:-1,0] < self.table[1:,0]):
+        #     return False
+        # for row in self.table[:-1]:
+        #     if not np.all(row[:-1] < row[1:]):
+        #         return False
+        # if self.table[-1,-1] == 0:
+        #     last_row = self.table[-1]
+        #     return np.all(last_row[:-2] < last_row[1:-1])
+        # return False
+        temp = np.reshape(self.table, (self.width * self.height))
+        if temp[-1] == 0:
+            return np.all(temp[:-2] < temp[1:-1])
         return False
 
-
-
-    def recurse(self, depth):
-        if depth == 20:
+    def recurse(self, depth, prohibited_move):
+        if self.is_solved():
+            return True
+        if depth < 2:
+            for move in self.get_available_moves().values():
+                if move != prohibited_move:
+                    print("rect")
+                    print(self)
+                    self.move(move)
+                    if self.recurse(depth + 1, self.empty_field_index):
+                        return True
+                    self.move(self.empty_field_index)
+                    print(self)
             return False
+        return False
