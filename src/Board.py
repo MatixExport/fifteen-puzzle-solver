@@ -1,3 +1,4 @@
+import math
 import random
 
 import numpy as np
@@ -84,6 +85,32 @@ class Board:
                 #     print("Move prohibited: ", prohibited_move)
             return False
         return False
+
+
+    def hamming_dist(self):
+        temp = np.reshape(self.table, (self.width * self.height))
+        solved = [i for i in range(len(temp)-1)]
+        solved.append(0)
+        hamming = 0
+        for i,j in zip(solved,temp):
+            if i!=j:
+                hamming +=1
+        return hamming
+
+    def manhattan_dist(self):
+        sum = 0
+        for row in range(self.height):
+            for col in range(self.width):
+                val = self.table[row][col]
+                correct_row = math.ceil(val/self.height) -1
+                correct_col = (val - correct_row*self.height)-1
+                if val == 0:
+                    correct_row = self.height -1
+                    correct_col = self.width - 1
+                sum += abs(correct_row - row) + abs(correct_col - col)
+        return sum
+
+
 
     def check_level(self, prohibited_move):
         for move in self.get_available_moves().values():
