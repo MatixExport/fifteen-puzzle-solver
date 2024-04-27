@@ -13,13 +13,23 @@ class Board:
         self.height = 0
         self.iteration = 0
         self.table = None
+        self.order_str = "UDLR"
         self.empty_field_index = Index(0, 0)
+        self.order_dict = {
+            "L":self.get_l_move,
+            "R":self.get_r_move,
+            "D":self.get_d_move,
+            "U":self.get_u_move
+        }
 
     def generate_random(self):
         self.table = np.arange(self.width * self.height)
         random.shuffle(self.table)
         self.table = np.reshape(self.table, (self.height, self.width))
         self.find_empty_index()
+
+    def set_order(self,order_str):
+        self.order_str = str.upper(order_str)
 
     def set_table(self, table):
         self.height = len(table)
@@ -38,16 +48,29 @@ class Board:
 
     def get_available_moves(self):
         temp = {}
-        if self.empty_field_index.x - 1 >= 0:
-            temp["L"] = Index(self.empty_field_index.x - 1, self.empty_field_index.y)
-        if self.empty_field_index.x + 1 <= self.width - 1:
-            temp["R"] = Index(self.empty_field_index.x + 1, self.empty_field_index.y)
-        if self.empty_field_index.y - 1 >= 0:
-            temp["D"] = Index(self.empty_field_index.x, self.empty_field_index.y - 1)
-        if self.empty_field_index.y + 1 <= self.height - 1:
-            temp["U"] = Index(self.empty_field_index.x, self.empty_field_index.y + 1)
-
+        for char in self.order_str:
+            self.order_dict[char](temp)
         return temp
+
+
+
+    def get_l_move(self,dict):
+        if self.empty_field_index.x - 1 >= 0:
+            dict["L"] = Index(self.empty_field_index.x - 1, self.empty_field_index.y)
+
+
+    def get_r_move(self,dict):
+        if self.empty_field_index.x + 1 <= self.width - 1:
+            dict["R"] = Index(self.empty_field_index.x + 1, self.empty_field_index.y)
+
+    def get_d_move(self,dict):
+        if self.empty_field_index.y - 1 >= 0:
+            dict["D"] = Index(self.empty_field_index.x, self.empty_field_index.y - 1)
+
+    def get_u_move(self,dict):
+        if self.empty_field_index.y + 1 <= self.height - 1:
+            dict["U"] = Index(self.empty_field_index.x, self.empty_field_index.y + 1)
+
 
     def move(self, index):
         self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[index.y, index.x] = self.table[
