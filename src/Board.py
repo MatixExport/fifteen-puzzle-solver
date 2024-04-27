@@ -1,3 +1,4 @@
+import copy
 import math
 import random
 
@@ -113,8 +114,6 @@ class Board:
                 sum += abs(correct_row - row) + abs(correct_col - col)
         return sum
 
-
-
     def check_level(self, prohibited_move):
         for move in self.get_available_moves().values():
             if move != prohibited_move:
@@ -167,30 +166,39 @@ class Board:
             for move in reversed(moves):
                 self.move(move)
 
+    def make_moves(self, moves):
+        for move in moves:
+            self.move(move)
 
-    def make_moves(self,moves):
-        pass
-    def reverse_moves(self,moves):
-        pass
-    def a_star(self,h):
+    def reverse_moves(self, moves):
+        for move in reversed(moves):
+            self.move(move)
+
+    def a_star(self, h):
         start = [self.empty_field_index]
         open_set = PriorityQueue()
         open_set.put((h(),start))
-
+        empty_index = Index(self.empty_field_index.x,self.empty_field_index.y)
         origin = None
-        #cena dotarcia do danego stanu boarda
-        gscore = {self.table: 0}
-        #cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
-        fscore = {self.table:h()}
+        # cena dotarcia do danego stanu boarda
+        gscore = {str(self.table.flatten()): 0}
+        # cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
+        fscore = {str(self.table.flatten()): h()}
 
         while not open_set.empty():
             current = open_set.get()[1]
 
             self.make_moves(current)
+
+
+
             if self.is_solved():
                 return True
 
+            current_gscore = gscore[str(self.table.flatten())]
+
             for move in self.get_available_moves().values():
+                self.empty_field_index = empty_index
                 original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
                 self.move(move)
 
@@ -202,16 +210,14 @@ class Board:
                 if not str(self.table.flatten()) in gscore:
                     gscore[str(self.table.flatten())] = float('inf')
 
+                neighbour_gscore = current_gscore + 1
+                if neighbour_gscore < gscore[str(self.table.flatten())]:
+                    gscore[str(self.table.flatten())] = neighbour_gscore
+                    fscore[str(self.table.flatten())] = neighbour_gscore + h()
+
+                    open_set.put((neighbour_gscore + h(),path))
 
                 self.move(original_position)
 
             self.reverse_moves(current)
-
-
-
-
-
-
-
-
-
+        return False
