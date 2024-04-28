@@ -32,50 +32,36 @@ def manhattan_dist(self):
     return sum
 
 
-def a_star(self, h):
-    start = [self.empty_field_index]
+def table_as_tuple(table):
+              return tuple(map(tuple, table))
+
+
+def a_star(board, h):
+    start = []
     open_set = PriorityQueue()
-    open_set.put((h(self), start))
+    open_set.put((h(board), table_as_tuple(board.table)))
     # cena dotarcia do danego stanu boarda
-    gscore = {str(self.table.flatten()): 0}
+    gscore = {table_as_tuple(board.table): 0}
     # cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
-    fscore = {str(self.table.flatten()): h(self)}
 
     while not open_set.empty():
         current = open_set.get()[1]
-        self.make_moves(current)
+        board.set_table(np.asarray(current))
 
-        if self.is_solved():
-            self.reverse_moves(current)
-            result_string = ""
-            for move in current[1:]:
-                dic = self.get_available_moves()
-                value = list(dic.keys())[list(dic.values()).index(move)]
-                self.move(move)
-                result_string += value
-            return result_string
+        if board.is_solved():
+            return True
 
-        current_gscore = gscore[str(self.table.flatten())]
+        current_gscore = gscore[current]
 
-        for move in self.get_available_moves().values():
+        for move in board.get_available_moves():
 
-            original_position = Index(self.empty_field_index.x, self.empty_field_index.y)
-            self.move(move)
+            if board.move(move):
 
-            path = copy.deepcopy(current).copy()
-            path.append(move)
-
-            if not str(self.table.flatten()) in gscore:
-                gscore[str(self.table.flatten())] = float('inf')
-
-            neighbour_gscore = current_gscore + 1
-            if neighbour_gscore < gscore[str(self.table.flatten())]:
-                gscore[str(self.table.flatten())] = neighbour_gscore
-                fscore[str(self.table.flatten())] = neighbour_gscore + h(self)
-
-                open_set.put((neighbour_gscore + h(self), path))
-
-            self.move(original_position)
-
-        self.reverse_moves(current)
+                neighbour_tuple = table_as_tuple(board.table)
+                neighbour_gscore = current_gscore + 1
+                if (not neighbour_tuple in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
+                    gscore[neighbour_tuple] = neighbour_gscore
+                    open_set.put((neighbour_gscore + h(board), neighbour_tuple))
+                board.reverse_move(move)
+        board.set_table(np.asarray(current))
     return False
