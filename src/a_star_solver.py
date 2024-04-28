@@ -33,23 +33,23 @@ def manhattan_dist(self):
 
 
 def table_as_tuple(table):
-              return tuple(map(tuple, table))
+    return tuple(map(tuple, table))
 
 
 def a_star(board, h):
-    start = []
     open_set = PriorityQueue()
-    open_set.put((h(board), table_as_tuple(board.table)))
+    open_set.put((h(board), table_as_tuple(board.table), ""))
     # cena dotarcia do danego stanu boarda
     gscore = {table_as_tuple(board.table): 0}
     # cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
 
     while not open_set.empty():
-        current = open_set.get()[1]
+        current_tuple = open_set.get()
+        current = current_tuple[1]
         board.set_table(np.asarray(current))
 
         if board.is_solved():
-            return True
+            return current_tuple[2]
 
         current_gscore = gscore[current]
 
@@ -61,7 +61,7 @@ def a_star(board, h):
                 neighbour_gscore = current_gscore + 1
                 if (not neighbour_tuple in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
                     gscore[neighbour_tuple] = neighbour_gscore
-                    open_set.put((neighbour_gscore + h(board), neighbour_tuple))
+                    open_set.put((neighbour_gscore + h(board), neighbour_tuple, current_tuple[2] + (move)))
                 board.reverse_move(move)
         board.set_table(np.asarray(current))
     return False
