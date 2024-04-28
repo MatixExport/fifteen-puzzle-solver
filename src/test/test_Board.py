@@ -3,7 +3,10 @@ from unittest import TestCase
 import numpy as np
 
 from src import bfs_solver, dfs_solver, a_star_solver
+from src.AstarSolver import AstarSolver
+from src.BfsSolver import BfsSolver
 from src.Board import Board
+from src.DfsSolver import DfsSolver
 from src.a_star_solver import hamming_dist, manhattan_dist
 
 
@@ -65,5 +68,22 @@ class TestBoard(TestCase):
         board.reverse_move("L")
         assert np.array_equal(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]), board.table)
 
-    def test_ufi(self):
-        assert 2==2
+    def test_classes(self):
+        board = Board()
+        board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
+        solver = BfsSolver(board)
+        solver.solve()
+        assert np.array_equal(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]]), board.table)
+        board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
+        solver = DfsSolver(board)
+        solver.solve()
+        assert np.array_equal(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]]), board.table)
+        board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
+        solver = AstarSolver(board,AstarSolver.manhattan_dist)
+        solver.solve()
+        assert np.array_equal(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]]), board.table)
+
+
+
+
+

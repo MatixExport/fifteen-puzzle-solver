@@ -28,7 +28,7 @@ class Logger(ObserverMixin):
     def set_event_handlers(self):
         self.add_event_handler("depth",self.on_depth)
         self.add_event_handler("visited", self.on_visited)
-        self.add_event_handler("processed", self.on_processed())
+        self.add_event_handler("processed", self.on_processed)
 
     def timeit(self, method):
         def timed(*args, **kwargs):
