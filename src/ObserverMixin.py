@@ -1,13 +1,13 @@
 class ObserverMixin:
-    def __int__(self):
-        self.observer_list = []
+    def __init__(self):
+        self.event_handlers = {}
 
-    def attach(self, observer):
-        self.observer_list.append(observer)
+    def add_event_handler(self, name, func):
+        self.event_handlers[name] = func
 
-    def detach(self, observer):
-        self.observer_list.remove(observer)
+    def remove_event_handler(self, name):
+        self.event_handlers.pop(name)
 
-    def notify(self, msg, value):
-        for observer in self.observer_list:
-            observer.on_event(msg, value)
+    def on_event(self, msg, value):
+        if msg in self.event_handlers:
+            self.event_handlers[msg](value)

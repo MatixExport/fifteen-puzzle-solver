@@ -4,13 +4,14 @@ from queue import PriorityQueue
 
 import numpy as np
 
-from src.ObserverMixin import ObserverMixin
+from src.ObservableMixin import ObservableMixin
 from src.Solver import Solver
 
 
-class AstarSolver(Solver,ObserverMixin):
+class AstarSolver(Solver, ObservableMixin):
 
     def __init__(self, board=None, heuristic=None):
+        super().__init__()
         self.board = board
         self.heuristic = heuristic
         if self.heuristic is None:

@@ -3,13 +3,14 @@ from collections import deque
 import numpy as np
 
 from src.Index import Index
-from src.ObserverMixin import ObserverMixin
+from src.ObservableMixin import ObservableMixin
 from src.Solver import Solver
 
 
-class BfsSolver(Solver,ObserverMixin):
+class BfsSolver(Solver, ObservableMixin):
 
     def __init__(self, board=None):
+        super().__init__()
         self.board = board
 
     def set_board(self,board):

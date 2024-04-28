@@ -1,12 +1,13 @@
 import time
 from src.Index import Index
-from src.ObserverMixin import ObserverMixin
+from src.ObservableMixin import ObservableMixin
 from src.Solver import Solver
 
 
-class DfsSolver(Solver,ObserverMixin):
+class DfsSolver(Solver,ObservableMixin):
 
     def __init__(self, board=None):
+        super().__init__()
         self.board = board
 
     def set_board(self, board):
