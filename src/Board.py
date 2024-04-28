@@ -77,11 +77,13 @@ class Board:
         return None
 
     def move(self, letter):
-        index = self.order_dict[letter]
+        index = self.order_dict[letter]()
         if index:
             self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[index.y, index.x] = self.table[
                 index.y, index.x], self.table[self.empty_field_index.y, self.empty_field_index.x]
             self.empty_field_index = index
+            return True
+        return False
 
     def reverse_move(self,letter):
         self.move(self.reverse_dict[letter])

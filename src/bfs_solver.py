@@ -41,26 +41,20 @@ def table_as_tuple(board):
 
 def bfs2(board):
     que = deque()
-    for letter,move in board.get_available_moves().items():
-        original_position = Index(board.empty_field_index.x, board.empty_field_index.y)
-        board.move(move)
+    for letter in board.get_available_moves():
+        board.move(letter)
         que.append((table_as_tuple(board), letter))
-        board.move(original_position)
+        board.reverse_move(letter)
 
     while que:
         og_tab = que.popleft()
         board.table = np.asarray(og_tab[0])
         board.find_empty_index()
-        original_position = Index(board.empty_field_index.x, board.empty_field_index.y)
         if board.is_solved():
             return og_tab[1]
-        pos_moves = board.get_available_moves()
-        if len(pos_moves.values()) > 0:
-            for letter,pos_move in pos_moves.items():
-                if pos_move != original_position:
-                    original_position2 = Index(board.empty_field_index.x, board.empty_field_index.y)
-                    board.move(pos_move)
-                    que.append((table_as_tuple(board), og_tab[1] + letter))
-                    board.move(original_position2)
+        for letter in board.get_available_moves():
+            if board.move(letter):
+                que.append((table_as_tuple(board), og_tab[1] + letter))
+                board.reverse_move(letter)
 
         board.table = np.asarray(og_tab[0])
