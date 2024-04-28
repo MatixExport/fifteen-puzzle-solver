@@ -86,7 +86,10 @@ class Board:
         return False
 
     def reverse_move(self,letter):
-        self.move(self.reverse_dict[letter])
+        self.move(self.reverse_letter(letter))
+
+    def reverse_letter(self,letter):
+        return self.reverse_dict[letter]
 
     def make_moves(self, moves):
         for move in moves:
