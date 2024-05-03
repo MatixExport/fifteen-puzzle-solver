@@ -66,18 +66,17 @@ class Board:
             return Index(self.empty_field_index.x + 1, self.empty_field_index.y)
         return None
 
-    def get_d_move(self):
+    def get_u_move(self):
         if self.empty_field_index.y - 1 >= 0:
             return Index(self.empty_field_index.x, self.empty_field_index.y - 1)
         return None
 
-    def get_u_move(self):
+    def get_d_move(self):
         if self.empty_field_index.y + 1 <= self.height - 1:
             return Index(self.empty_field_index.x, self.empty_field_index.y + 1)
         return None
 
     def move(self, letter):
-        self.find_empty_index()
         index = self.order_dict[letter]()
         if index:
             self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[index.y, index.x] = self.table[
