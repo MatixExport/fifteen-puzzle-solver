@@ -77,6 +77,7 @@ class Board:
         return None
 
     def move(self, letter):
+        self.find_empty_index()
         index = self.order_dict[letter]()
         if index:
             self.table[self.empty_field_index.y, self.empty_field_index.x], self.table[index.y, index.x] = self.table[
