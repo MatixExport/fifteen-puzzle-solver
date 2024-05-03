@@ -14,7 +14,8 @@ class DfsSolver(Solver,ObservableMixin):
         self.board = board
 
     def solve(self):
-        return self.dfs(self.board, 0, "")
+        solution = self.dfs(self.board, 0, "")[::-1]
+        return solution
 
     def dfs(self, board, depth, prohibited_move):
         if board.is_solved():
@@ -25,8 +26,8 @@ class DfsSolver(Solver,ObservableMixin):
                     if board.move(move):
                         temp = self.dfs(board, depth + 1, board.reverse_letter(move))
                         if temp != False:
-                            temp += prohibited_move
-                            return temp[::-1] if depth == 0 else temp
+                            temp += move
+                            return temp
                         board.reverse_move(move)
 
             return False

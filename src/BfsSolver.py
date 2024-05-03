@@ -23,7 +23,6 @@ class BfsSolver(Solver, ObservableMixin):
         return self.bfs(self.board)
 
     def bfs(self,board):
-        print(board.table)
         que = deque()
         for letter in board.get_available_moves():
             if board.move(letter):
@@ -35,8 +34,6 @@ class BfsSolver(Solver, ObservableMixin):
             board.table = np.asarray(og_tab[0])
             board.find_empty_index()
             if board.is_solved():
-                print(og_tab[0])
-                print(og_tab[1])
                 return og_tab[1]
             for letter in board.get_available_moves():
                 if board.move(letter):
