@@ -2,9 +2,9 @@ from collections import deque
 
 import numpy as np
 
-from src.Index import Index
-from src.ObservableMixin import ObservableMixin
-from src.Solver import Solver
+from Index import Index
+from ObservableMixin import ObservableMixin
+from Solver import Solver
 
 
 class BfsSolver(Solver, ObservableMixin):

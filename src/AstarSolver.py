@@ -4,8 +4,8 @@ from queue import PriorityQueue
 
 import numpy as np
 
-from src.ObservableMixin import ObservableMixin
-from src.Solver import Solver
+from ObservableMixin import ObservableMixin
+from Solver import Solver
 
 
 class AstarSolver(Solver, ObservableMixin):
@@ -67,6 +67,7 @@ class AstarSolver(Solver, ObservableMixin):
             board.set_table(np.asarray(current))
 
             if board.is_solved():
+                print(current_tuple)
                 return current_tuple[2]
 
             current_gscore = gscore[current]
@@ -79,7 +80,7 @@ class AstarSolver(Solver, ObservableMixin):
                     neighbour_gscore = current_gscore + 1
                     if (not neighbour_tuple in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
                         gscore[neighbour_tuple] = neighbour_gscore
-                        open_set.put((neighbour_gscore + h(board), neighbour_tuple, current_tuple[2] + (move)))
+                        open_set.put((neighbour_gscore + h(board), neighbour_tuple, current_tuple[2] + move))
                     board.reverse_move(move)
             board.set_table(np.asarray(current))
         return False

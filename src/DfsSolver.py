@@ -1,7 +1,7 @@
 import time
-from src.Index import Index
-from src.ObservableMixin import ObservableMixin
-from src.Solver import Solver
+from Index import Index
+from ObservableMixin import ObservableMixin
+from Solver import Solver
 
 
 class DfsSolver(Solver,ObservableMixin):
@@ -14,19 +14,19 @@ class DfsSolver(Solver,ObservableMixin):
         self.board = board
 
     def solve(self):
-        return self.dfs(self.board, 0, None)
+        return self.dfs(self.board, 0, "")
 
     def dfs(self, board, depth, prohibited_move):
         if board.is_solved():
-            return []
+            return ""
         if depth < 15:
             for move in board.get_available_moves():
                 if move != prohibited_move:
                     if board.move(move):
                         temp = self.dfs(board, depth + 1, board.reverse_letter(move))
                         if temp != False:
-                            temp.append(prohibited_move)
-                            return reversed(temp) if depth == 0 else temp
+                            temp += prohibited_move
+                            return temp[::-1] if depth == 0 else temp
                         board.reverse_move(move)
 
             return False

@@ -1,6 +1,6 @@
 import time
 
-from src.ObserverMixin import ObserverMixin
+from ObserverMixin import ObserverMixin
 
 
 class Logger(ObserverMixin):

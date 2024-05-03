@@ -3,7 +3,7 @@ import time
 
 import numpy as np
 
-from src.Index import Index
+from Index import Index
 
 
 class Board:
@@ -104,3 +104,23 @@ class Board:
         if temp[-1] == 0:
             return np.all(temp[:-2] < temp[1:-1])
         return False
+
+
+    def read_from_file(self, filename):
+        file = open(filename)
+        first = file.readline().strip().split()
+        self.height = int(first[0])
+        self.width = int(first[1])
+
+        temp_array = []
+
+        for line in file:
+            temp_row = []
+            for x in line.strip().split():
+                temp_row.append(int(x))
+            temp_array.append(temp_row)
+        file.close()
+
+        self.table = np.array(temp_array)
+        self.find_empty_index()
+
