@@ -63,14 +63,14 @@ class AstarSolver(Solver, ObservableMixin):
 
         while not open_set.empty():
             current_tuple = open_set.get()
-            current = current_tuple[1]
-            board.set_table(np.asarray(current))
+            current_board = current_tuple[1]
+            board.set_table(np.asarray(current_board))
 
             if board.is_solved():
                 print(current_tuple)
                 return current_tuple[2]
 
-            current_gscore = gscore[current]
+            current_gscore = gscore[current_board]
 
             for move in board.get_available_moves():
 
@@ -78,7 +78,7 @@ class AstarSolver(Solver, ObservableMixin):
 
                     neighbour_tuple = self.table_as_tuple(board.table)
                     neighbour_gscore = current_gscore + 1
-                    if (not neighbour_tuple in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
+                    if (neighbour_tuple not in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
                         gscore[neighbour_tuple] = neighbour_gscore
                         open_set.put((neighbour_gscore + h(board), neighbour_tuple, current_tuple[2] + move))
                     board.reverse_move(move)
