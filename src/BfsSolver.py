@@ -23,17 +23,20 @@ class BfsSolver(Solver, ObservableMixin):
         return self.bfs(self.board)
 
     def bfs(self,board):
+        print(board.table)
         que = deque()
         for letter in board.get_available_moves():
-            board.move(letter)
-            que.append((self.table_as_tuple(board), letter))
-            board.reverse_move(letter)
+            if board.move(letter):
+                que.append((self.table_as_tuple(board), letter))
+                board.reverse_move(letter)
 
         while que:
             og_tab = que.popleft()
             board.table = np.asarray(og_tab[0])
             board.find_empty_index()
             if board.is_solved():
+                print(og_tab[0])
+                print(og_tab[1])
                 return og_tab[1]
             for letter in board.get_available_moves():
                 if board.move(letter):

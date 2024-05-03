@@ -6,6 +6,7 @@ from src.AstarSolver import AstarSolver
 from src.BfsSolver import BfsSolver
 from src.Board import Board
 from src.DfsSolver import DfsSolver
+from src.MoveSolver import MoveSolver
 
 
 class TestBoard(TestCase):
@@ -66,17 +67,23 @@ class TestBoard(TestCase):
         board.reverse_move("L")
         assert np.array_equal(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]), board.table)
 
-    def test_classes(self):
+    def is_solution(self, initial_board, solution):
+        solver = MoveSolver(initial_board, solution)
+        solver.solve()
+        assert initial_board.is_solved() == True
+
+    def solver_test(self,solver):
         board = Board()
+        test_board = Board()
+        test_board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
         board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
-        solver = BfsSolver(board)
-        solver.solve()
+        solver.set_board(board)
+        solution = solver.solve()
         assert np.array_equal(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]]), board.table)
-        board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
-        solver = DfsSolver(board)
-        solver.solve()
-        assert np.array_equal(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]]), board.table)
-        board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
-        solver = AstarSolver(board, AstarSolver.manhattan_dist)
-        solver.solve()
-        assert np.array_equal(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]]), board.table)
+        self.is_solution(test_board, solution)
+
+    def test_classes(self):
+        self.solver_test(BfsSolver())
+        self.solver_test(AstarSolver(None,AstarSolver.manhattan_dist))
+        self.solver_test(AstarSolver(None, AstarSolver.hamming_dist))
+        self.solver_test(DfsSolver())
