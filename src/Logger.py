@@ -1,6 +1,19 @@
 import time
 
 from ObserverMixin import ObserverMixin
+from timeit import default_timer as timer
+
+
+def timeit(f):
+    def wrapper(*args):
+        instance = args[0]
+        start = timer()
+        result = f(*args)
+        end = timer()
+        instance.elapsed_time = round((end - start) * 1000, 3)
+        return result
+
+    return wrapper
 
 
 class Logger(ObserverMixin):
@@ -37,16 +50,6 @@ class Logger(ObserverMixin):
         self.add_event_handler("depth", self.on_depth)
         self.add_event_handler("visited", self.on_visited)
         self.add_event_handler("processed", self.on_processed)
-
-    def timeit(self, method):
-        def timed(*args, **kwargs):
-            ts = time.time()
-            result = method(*args, **kwargs)
-            te = time.time()
-            self.elapsed_time = '%r  %2.22f ms' % (method.__name__, (te - ts) * 1000)
-            return result
-
-        return timed
 
     def set_solver(self, solver):
         self.clear()

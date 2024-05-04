@@ -38,6 +38,7 @@ class BfsSolver(Solver, ObservableMixin):
 
         upper_level_nodes = len(que)
 
+
         while que:
             og_tab = que.popleft()
             upper_level_nodes -= 1
@@ -56,6 +57,7 @@ class BfsSolver(Solver, ObservableMixin):
                 if board.move(letter):
                     que.append((self.table_as_tuple(board), og_tab[1] + letter))
                     board.reverse_move(letter)
+
             if depth_increased:
                 upper_level_nodes = len(que)
 

@@ -1,5 +1,5 @@
 class ObservableMixin:
-    def __int__(self):
+    def __init__(self):
         self.observer_list = []
 
     def attach(self, observer):
