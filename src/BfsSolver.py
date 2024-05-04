@@ -60,5 +60,6 @@ class BfsSolver(Solver, ObservableMixin):
 
             if depth_increased:
                 upper_level_nodes = len(que)
+                depth_increased = False
 
             board.table = np.asarray(og_tab[0])
