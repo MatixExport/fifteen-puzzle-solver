@@ -15,6 +15,14 @@ class Logger(ObserverMixin):
         self.processed_states = 0
         self.set_event_handlers()
 
+    def clear(self):
+        self.elapsed_time = None
+        self.solver = None
+        self.solution = None
+        self.max_depth = 0
+        self.visited_states = 0
+        self.processed_states = 0
+
     def on_depth(self, value):
         if value > self.max_depth:
             self.max_depth = value
@@ -26,7 +34,7 @@ class Logger(ObserverMixin):
         self.visited_states += value
 
     def set_event_handlers(self):
-        self.add_event_handler("depth",self.on_depth)
+        self.add_event_handler("depth", self.on_depth)
         self.add_event_handler("visited", self.on_visited)
         self.add_event_handler("processed", self.on_processed)
 
@@ -41,6 +49,7 @@ class Logger(ObserverMixin):
         return timed
 
     def set_solver(self, solver):
+        self.clear()
         self.solver = solver
         self.solver.attach(self)
 

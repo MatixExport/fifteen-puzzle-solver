@@ -2,11 +2,11 @@ from unittest import TestCase
 
 import numpy as np
 
-from src.AstarSolver import AstarSolver
-from src.BfsSolver import BfsSolver
-from src.Board import Board
-from src.DfsSolver import DfsSolver
-from src.MoveSolver import MoveSolver
+from AstarSolver import AstarSolver
+from BfsSolver import BfsSolver
+from Board import Board
+from DfsSolver import DfsSolver
+from MoveSolver import MoveSolver
 
 
 class TestBoard(TestCase):
