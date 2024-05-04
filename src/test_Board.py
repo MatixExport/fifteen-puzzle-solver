@@ -7,6 +7,7 @@ from BfsSolver import BfsSolver
 from Board import Board
 from DfsSolver import DfsSolver
 from MoveSolver import MoveSolver
+from src.Logger import Logger
 
 
 class TestBoard(TestCase):
@@ -87,3 +88,12 @@ class TestBoard(TestCase):
         self.solver_test(AstarSolver(None,AstarSolver.manhattan_dist))
         self.solver_test(AstarSolver(None, AstarSolver.hamming_dist))
         self.solver_test(DfsSolver())
+
+    def test_logger(self):
+        board = Board()
+        board.set_table(np.array([[1, 0, 5], [4, 3, 2], [7, 8, 6]]))
+        solver = AstarSolver(board,AstarSolver.manhattan_dist)
+        logger = Logger()
+        logger.set_solver(solver)
+        logger.recorded_solve()
+        print(logger.elapsed_time)
