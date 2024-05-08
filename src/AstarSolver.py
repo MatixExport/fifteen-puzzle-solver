@@ -76,12 +76,12 @@ class AstarSolver(Solver, ObservableMixin):
             for move in board.get_all_moves():
 
                 if board.move(move):
+                    self.notify("visited", 1)
 
                     neighbour_tuple = self.table_as_tuple(board.table)
                     neighbour_gscore = current_gscore + 1
                     if (neighbour_tuple not in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
                         gscore[neighbour_tuple] = neighbour_gscore
-                        self.notify("visited", 1)
                         path = current_tuple[2] + move
                         self.notify("depth",len(path))
                         open_set.put((neighbour_gscore + h(board), neighbour_tuple, path))
