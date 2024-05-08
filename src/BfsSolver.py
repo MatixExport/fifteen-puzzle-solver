@@ -28,6 +28,7 @@ class BfsSolver(Solver, ObservableMixin):
 
     def bfs(self, board):
         depth = 1
+
         depth_increased = False
 
         que = deque()
@@ -35,13 +36,18 @@ class BfsSolver(Solver, ObservableMixin):
             if board.move(letter):
                 que.append((self.table_as_tuple(board), letter))
                 board.reverse_move(letter)
-
         upper_level_nodes = len(que)
+
+        self.notify("processed", 1)
+        self.notify("visited", upper_level_nodes+1)
+        self.notify("depth", depth)
 
 
         while que:
             og_tab = que.popleft()
             self.notify("processed", 1)
+            if board.is_solved():
+                return og_tab[1]
             upper_level_nodes -= 1
             if upper_level_nodes == 0:
                 depth += 1
@@ -49,8 +55,7 @@ class BfsSolver(Solver, ObservableMixin):
                 depth_increased = True
             board.table = np.asarray(og_tab[0])
             board.find_empty_index()
-            if board.is_solved():
-                return og_tab[1]
+
 
             if depth >= self.max_depth:
                 return False
