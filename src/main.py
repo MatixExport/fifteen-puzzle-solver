@@ -57,6 +57,5 @@ if __name__ == "__main__":
         if solution := solver.solve():
             output.write(str(len(solution)) + "\n")
             output.write(solution)
-            print(board)
         else:
             output.write("-1")
