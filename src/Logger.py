@@ -60,3 +60,14 @@ class Logger(ObserverMixin):
     def recorded_solve(self):
         self.solution = self.solver.solve()
         return self.solution
+
+    def parse_recorded_information(self):
+        info = ""
+        if self.solution:
+            info += str(len(self.solution)) + "\n"
+        info += str(self.visited_states) + "\n"
+        info += str(self.processed_states) + "\n"
+        info += str(self.max_depth) + "\n"
+        info += str(self.elapsed_time) + "\n"
+        return info
+
