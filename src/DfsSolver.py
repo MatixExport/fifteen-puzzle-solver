@@ -18,6 +18,7 @@ class DfsSolver(Solver, ObservableMixin):
         self.max_depth = depth
 
     def solve(self):
+        self.notify("visited", 1)
         solution = self.dfs(self.board, 0, "")[::-1]
         return solution
 
