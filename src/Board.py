@@ -53,7 +53,19 @@ class Board:
     def __str__(self):
         return str(self.table)
 
+    #It is used only in dfs
+    #and only to simulate visiting nodes
+    #and its horrible
     def get_available_moves(self):
+        moves = []
+        for letter in self.order_str:
+            if self.order_dict[letter]():
+                moves.append(letter)
+        return moves
+
+
+
+    def get_all_moves(self):
         return self.order_str
 
     def get_l_move(self):

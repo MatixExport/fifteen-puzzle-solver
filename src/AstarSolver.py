@@ -57,12 +57,14 @@ class AstarSolver(Solver, ObservableMixin):
     def astar(self, board, h):
         open_set = PriorityQueue()
         open_set.put((h(board), self.table_as_tuple(board.table), ""))
+        self.notify("visited", 1)
         # cena dotarcia do danego stanu boarda
         gscore = {self.table_as_tuple(board.table): 0}
         # cena dotarcia do danego stanu boarda + przewidywana cena dojścia od tego stanu do końca
 
         while not open_set.empty():
             current_tuple = open_set.get()
+            self.notify("processed", 1)
             current_board = current_tuple[1]
             board.set_table(np.asarray(current_board))
 
@@ -71,7 +73,7 @@ class AstarSolver(Solver, ObservableMixin):
 
             current_gscore = gscore[current_board]
 
-            for move in board.get_available_moves():
+            for move in board.get_all_moves():
 
                 if board.move(move):
 
@@ -79,7 +81,10 @@ class AstarSolver(Solver, ObservableMixin):
                     neighbour_gscore = current_gscore + 1
                     if (neighbour_tuple not in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
                         gscore[neighbour_tuple] = neighbour_gscore
-                        open_set.put((neighbour_gscore + h(board), neighbour_tuple, current_tuple[2] + move))
+                        self.notify("visited", 1)
+                        path = current_tuple[2] + move
+                        self.notify("depth",len(path))
+                        open_set.put((neighbour_gscore + h(board), neighbour_tuple, path))
                     board.reverse_move(move)
             board.set_table(np.asarray(current_board))
         return False

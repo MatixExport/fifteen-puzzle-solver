@@ -16,8 +16,13 @@ if __name__ == "__main__":
     parser.add_argument('Source', help='Name of file containing starting puzzle')
     parser.add_argument('Output', help='Name of file that the result will be saved to')
     parser.add_argument('Output_info', help='Name of file that will contain additional information')
+    parser.add_argument("-d","--depth",type=int, help="max depth, used in dfs and bfs")
 
     args = parser.parse_args()
+    max_depth = 15
+
+    if args.depth:
+        max_depth = args.depth
 
     board = Board()
     board.read_from_file(args.Source)
@@ -26,6 +31,7 @@ if __name__ == "__main__":
     if args.Strategy == "dfs":
         board.set_order(args.Parameter)
         solver = DfsSolver(board)
+        solver.set_max_depth(max_depth)
         if solution := solver.solve():
             output.write(str(len(solution)) + "\n")
             output.write(solution)
@@ -35,7 +41,8 @@ if __name__ == "__main__":
     if args.Strategy == "bfs":
         board.set_order(args.Parameter)
         solver = BfsSolver(board)
-        if solution := solver.solve():              # bfs never returns false, it should when exceeds depth limit
+        solver.set_max_depth(max_depth)
+        if solution := solver.solve():
             output.write(str(len(solution)) + "\n")
             output.write(solution)
         else:
@@ -47,7 +54,7 @@ if __name__ == "__main__":
         else:
             solver = AstarSolver(board, AstarSolver.manhattan_dist)
 
-        if solution := solver.solve():              # bfs never returns false, it should when exceeds depth limit
+        if solution := solver.solve():
             output.write(str(len(solution)) + "\n")
             output.write(solution)
             print(board)

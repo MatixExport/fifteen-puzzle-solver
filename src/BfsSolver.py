@@ -31,7 +31,7 @@ class BfsSolver(Solver, ObservableMixin):
         depth_increased = False
 
         que = deque()
-        for letter in board.get_available_moves():
+        for letter in board.get_all_moves():
             if board.move(letter):
                 que.append((self.table_as_tuple(board), letter))
                 board.reverse_move(letter)
@@ -41,9 +41,11 @@ class BfsSolver(Solver, ObservableMixin):
 
         while que:
             og_tab = que.popleft()
+            self.notify("processed", 1)
             upper_level_nodes -= 1
             if upper_level_nodes == 0:
                 depth += 1
+                self.notify("depth",depth)
                 depth_increased = True
             board.table = np.asarray(og_tab[0])
             board.find_empty_index()
@@ -53,8 +55,9 @@ class BfsSolver(Solver, ObservableMixin):
             if depth >= self.max_depth:
                 return False
 
-            for letter in board.get_available_moves():
+            for letter in board.get_all_moves():
                 if board.move(letter):
+                    self.notify("visited",1)
                     que.append((self.table_as_tuple(board), og_tab[1] + letter))
                     board.reverse_move(letter)
 
