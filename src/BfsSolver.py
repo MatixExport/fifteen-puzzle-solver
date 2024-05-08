@@ -45,6 +45,7 @@ class BfsSolver(Solver, ObservableMixin):
 
         while que:
             og_tab = que.popleft()
+            board.table = np.asarray(og_tab[0])
             self.notify("processed", 1)
             if board.is_solved():
                 return og_tab[1]
@@ -53,7 +54,7 @@ class BfsSolver(Solver, ObservableMixin):
                 depth += 1
                 self.notify("depth",depth)
                 depth_increased = True
-            board.table = np.asarray(og_tab[0])
+
             board.find_empty_index()
 
 
