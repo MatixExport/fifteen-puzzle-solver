@@ -97,3 +97,14 @@ class TestBoard(TestCase):
         logger.set_solver(solver)
         logger.recorded_solve()
         print(logger.elapsed_time)
+
+    def test_asymmetrical_boards(self):
+        board = Board()
+        board.set_table(np.array([[1, 2], [0, 4], [3, 5]]))
+        solver = AstarSolver(board, AstarSolver.hamming_dist)
+        solver.set_board(board)
+        solver.solve()
+        assert np.array_equal(np.array([[1, 2], [3, 4], [5, 0]]), board.table)
+
+
+

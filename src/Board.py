@@ -22,10 +22,10 @@ class Board:
             "U": self.get_u_move
         }
         self.reverse_dict = {
-            "L":"R",
-            "R":"L",
-            "U":"D",
-            "D":"U"
+            "L": "R",
+            "R": "L",
+            "U": "D",
+            "D": "U"
 
         }
 
@@ -53,17 +53,15 @@ class Board:
     def __str__(self):
         return str(self.table)
 
-    #It is used only in dfs
-    #and only to simulate visiting nodes
-    #and its horrible
+    # It is used only in dfs
+    # and only to simulate visiting nodes
+    # and its horrible
     def get_available_moves(self):
         moves = []
         for letter in self.order_str:
             if self.order_dict[letter]():
                 moves.append(letter)
         return moves
-
-
 
     def get_all_moves(self):
         return self.order_str
@@ -97,10 +95,10 @@ class Board:
             return True
         return False
 
-    def reverse_move(self,letter):
+    def reverse_move(self, letter):
         self.move(self.reverse_letter(letter))
 
-    def reverse_letter(self,letter):
+    def reverse_letter(self, letter):
         return self.reverse_dict[letter]
 
     def make_moves(self, moves):
@@ -116,7 +114,6 @@ class Board:
         if temp[-1] == 0:
             return np.all(temp[:-2] < temp[1:-1])
         return False
-
 
     def read_from_file(self, filename):
         file = open(filename)
@@ -135,4 +132,3 @@ class Board:
 
         self.table = np.array(temp_array)
         self.find_empty_index()
-

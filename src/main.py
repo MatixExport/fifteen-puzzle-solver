@@ -20,7 +20,7 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--depth", type=int, help="max depth, used in dfs and bfs")
 
     args = parser.parse_args()
-    max_depth = 15
+    max_depth = 20
 
     board = Board()
     logger = Logger()
