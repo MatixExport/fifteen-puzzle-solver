@@ -28,9 +28,7 @@ class BfsSolver(Solver, ObservableMixin):
 
     def bfs(self, board):
         depth = 1
-
         depth_increased = False
-
         que = deque()
         for letter in board.get_all_moves():
             if board.move(letter):
@@ -56,7 +54,7 @@ class BfsSolver(Solver, ObservableMixin):
 
             board.find_empty_index()
 
-            if depth >= self.max_depth:
+            if depth > self.max_depth:
                 return False
 
             for letter in board.get_all_moves():
