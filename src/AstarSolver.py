@@ -25,14 +25,12 @@ class AstarSolver(Solver, ObservableMixin):
 
     @staticmethod
     def hamming_dist(board):
-        temp = np.reshape(board.table, (board.width * board.height))
-        solved = [i for i in range(len(temp) - 1)]
-        solved.append(0)
-        hamming = 0
-        for i, j in zip(solved, temp):
-            if i != j:
-                hamming += 1
-        return hamming
+        wrong = 0
+        for row in range(board.height):
+            for column in range(board.width):
+                if board.table[row][column] != row * board.width + column+1:
+                    wrong += 1
+        return wrong
 
     @staticmethod
     def manhattan_dist(board):

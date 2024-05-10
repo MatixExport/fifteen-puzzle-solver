@@ -1,4 +1,4 @@
-\documentclass{classrep.cls}
+\documentclass{classrep}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{graphicx}
@@ -70,9 +70,8 @@
 
     \begin{figure}
         \centering
-        \includegraphics{img}
-        \caption{}
-        \label{fig:Rozwiązana piętnastka}
+        \includegraphics{15}
+        \caption{Rozwiązana piętnastka}
     \end{figure}
 
     Piętnastkę można zinterpretować jako graf, gdzie danym węzłem jest stan planszy. Natomiast krawędzie łączące węzły
@@ -93,7 +92,9 @@
                 Metoda polega na wybieraniu najbardziej obiecujacego węzła na podstawie heurystyki.
                 \begin{itemize}
                     \item Heurystyka Hamminga
+                        Heurystyka polega na zliczeniu ilości kafelków które nie znajdują się na odpowiednim miejscu.
                     \item Heurystyka Manhattana
+                        Heurystyka polega na zliczeniu sumy ruchów, które potrzebuje każdy z kafelków, żeby znależć się na odpowiednim miejscu.
                 \end{itemize}
         \end{itemize}
 
@@ -122,14 +123,20 @@
 
     \section{Materiały i metody}
     {\color{blue}
-    W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
-        których wyniki i dyskusja zamieszczane są w dalszych sekcjach. Opis ten
-        powinien być na tyle dokładny, aby osoba czytająca go potrafiła wszystkie
-    przeprowadzone badania samodzielnie powtórzyć w celu zweryfikowania ich
-    poprawności. Przy opisie należy odwoływać się i stosować do
-    opisanych w sekcji drugiej wzorów i oznaczeń, a także w jasny sposób opisać
-    cel konkretnego testu. Najlepiej byłoby wyraźnie wyszczególnić (ponumerować)
-        poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
+        Do przeprowadzenia eksperymentów użyliśmy skryptów oraz programów dostępnych na Wikampie.
+
+    Do przeprowadzenia eksperymentów użyto narzędzi udostępnionycg na platformie WIKAMP,
+    zostały wykorzystane przy:
+       \begin{itemize}
+            \item Generowaniu stanów układanek do rozwiązania
+            \item \item Uruchamianiu wykonanego programu dla wygenerowanych układanek
+          \item Weryfikacji poprawności rozwiązań
+           \item Podsumowaniu wyników
+     \end{itemize}
+    Badania zostały przeprowadzone dla wszystkich metod oraz możliwych stanów dla
+    głębokości od 1 do 7. Natomiast dla głębokości 15 zbadano przebiegi dla A*(obie heurystki)
+    oraz dla DFS(Kolejność RDUL).
+    }
 
     \section{Wyniki}
     {\color{blue}
@@ -144,6 +151,22 @@
 
     \section{Dyskusja}
     {\color{blue}
+
+    Na podstawie przeprowadzonych badań można wysunąć następujące wnioski:
+    \begin{itemize}
+        \item Dla układów w odległościach 1-7 od układu wzorcowego zdecydowanie najgorsze efekty uzyskano przy pomocy metody DFS.
+            Objawia się to znacznie dłuższym czasem szukania rozwiązania oraz odjandywaniem rozwiązań losowych a niekoniecznie najkrótszych.
+        \item Metoda BFS zawsze znajduje najkrótsze rozwiazanie, jest to spowodowane sposobem działania metody, która
+                sprawdza wszyskie mozliwe układy na zadanej głębokości przed sprawdzeniem kolejnej.
+        \item Metoda A* również zawsze odnajduje najkrótsze rozwiązanie, do tego metoda zdecydowanie najszybicej odnajdywała poprawne rozwiązanie.
+       Różnicę pomiędzy wykorzystanymi heurystykami dla układów z głębokością 1-7 jest znikoma.
+        \item Dla układów w odległości 15 od układu początkowego nadal A* okazuje się być najszybszą metodą, odnajdującą najkrótsze rozwiązanie.
+        \item Porównując heurystyki Manhattana oraz Hamminga można zauważyć, że Manhattan robi wrażenie dwa razy szybszego.
+        \item Metoda DFS również wygenerowała poprawne wyniki, w przeciwieństwie do metody BFS, która przez konieczność zapamiętywania wszyskich wężłów na danej głębokości
+            zajmuje zbyt wiele miejsca w pamięci operacyjnej aby ukończyć rozwiązywanie zadania.
+    \end{itemize}
+
+
     Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
     eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
     są, rzecz jasna, wnioski o charakterze uniwersalnym, które mogą być istotne
@@ -155,9 +178,18 @@
 
     \section{Wnioski}
     {\color{blue}
+     \begin{itemize}
+        \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego.
+         \item DFS również był w stanie odnaleźć rozwiązania dla każdego zadanego ułożenia układanki, jednak czas potrzebny na rozwiązanie był znaczie większy,
+            w szczególności, w przypadku, gdy długość najkrótszego rozwiazania była znacznie mniejsza niż zadana głębokość poszukiwań.
+         \item BFS dobrze poradził sobie z przeszukiwaniem układów o małej odległości od układu wzorcowego, jednak dla dużych odległości okazał się zupełnie bezużyteczny.
+     \end{itemize}
+
+
     W tej, przedostatniej, sekcji należy zamieścić podsumowanie najważniejszych
     wniosków z sekcji poprzedniej. Najlepiej jest je po prostu wypunktować. Znów,
-        tak jak poprzednio, najistotniejsze są wnioski o charakterze uniwersalnym.}
+        tak jak poprzednio, najistotniejsze są wnioski o charakterze uniwersalnym.
+    }
 
     \begin{thebibliography}{0}
         \bibitem{l2short} T. Oetiker, H. Partl, I. Hyna, E. Schlegl.
