@@ -1,0 +1,172 @@
+\documentclass{classrep.cls}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{graphicx}
+
+\DeclareUnicodeCharacter{00A0}{~}
+
+\studycycle{Informatyka, studia dzienne, inż I st.}
+\coursesemester{IV}
+
+\coursename{Sztuczna inteligencja i systemy ekspertowe}
+\courseyear{2023/2024}
+
+\courseteacher{Krzysztof Lichy}
+\coursegroup{poniedziałek, 12:15}
+
+\author{
+    \studentinfo{Mateusz Giełczyński}{247662} \and
+    \studentinfo{Jakub Kubiś}{247712}
+}
+
+\title{Zadanie 1: Piętnastka}
+
+\begin{document}
+    \maketitle
+
+    {\color{blue}
+    Klasa sprawozdania wymaga następujących pakietów:
+        \begin{itemize}
+            \item zestaw klas autorstwa Marcina Woli\'nskiego \ppauza u\.zywana jest klasa
+            \emph{mwart} (nazwa całego pakietu: \emph{mwcls}),
+            \item pakiet \emph{polski},
+            \item pakiet \emph{url}.
+        \end{itemize}}
+
+
+%{\color{blue}
+%W preambule należy wykorzystać następujące niestandardowe polecenia, aby
+%dostarczyć informacje wymagane do wygenerowania sprawozdania:
+%\begin{itemize}
+%    \item \verb+\studycycle{...}+ \ppauza tryb i rodzaj studiów,
+%    \item \verb+\coursesemester{...}+ \ppauza semestr studiów,
+%    \item \verb+\coursename{...}+ \ppauza nazwa przedmiotu,
+%    \item \verb+\courseyear{...}+ \ppauza bieżący rok akademicki,
+%    \item \verb+\courseteacher{...}+ \ppauza prowadzący laboratoria (proszę
+%    wpisywać osobę, której oddaje się sprawozdanie, a nie kierownika
+%    przedmiotu!),
+%    \item \verb+\coursegroup{...}+ \ppauza identyfikator grupy ćwiczeniowej,
+%    \item \verb+\studentinfo[e-mail]{imię i nazwisko}{nr albumu}+ \ppauza
+%    polecenie wykorzystywane \emph{tylko} w obrębie polecenia \verb+\author+
+%    służy do określenia imienia i nazwiska każdego z autorów, jak również
+%    numeru albumu i opcjonalnie adresu e\dywiz mail; jeśli adres nie jest
+%    podawany, należy pominąć argument opcjonalny.
+%\end{itemize}}
+
+
+    \section{Cel}
+    {\color{blue}
+    Celem zadania było napisanie programu znajdującego rozwiązanie układanki logicznej zwanej "Pietnastką" oraz zbadanie zasad działania
+    algorytmów przeszukujących grafy.
+    .}
+
+    \section{Wprowadzenie}
+    {\color{red}
+
+    Piętnastka to układanka logiczna składająca się z kwadratowej
+    planszy podzielonej na 16 kwadratów. Zawierających cyfry od 1 do 15 oraz jednym miejscem które zawsze pozostaje puste
+    co pozwala na przesuwanie sąsiednich kafelków, celem piętnastki jest uporządkowanie kafelków tak aby uzyskać układ liczbowy
+    gdzie liczby ułożone są w porządku rosnącym ,a ostatnie pole pozostaje puste.
+
+    \begin{figure}
+        \centering
+        \includegraphics{img}
+        \caption{}
+        \label{fig:Rozwiązana piętnastka}
+    \end{figure}
+
+    Piętnastkę można zinterpretować jako graf, gdzie danym węzłem jest stan planszy. Natomiast krawędzie łączące węzły
+    reprezentują możliwe ruchy pomiędzy stanami. Korzeniem w takim grafie będzie początkowy nieroziązany stan układanki.
+
+    Inepretacja piętnastki jako grafu pozwala nam stosować metody przeszukiwania grafów do znajdywania rozwiązań układnaki.
+    Zaimplementowane przez nas metody to:
+        \begin{itemize}
+            \item BFS (breadth-first search) - przeszukiwanie wszerz
+                Metoda polega na przeszukaniu wszystkich węzłów na jednej głębokości przed zejściem na niższy poziom.
+            \item DFS (depth-first search) - przeszukiwanie wgłąb
+                Metoda polega na preszukaniu wszystkich krawędzi danego wierzchołka dopiero po rekurencyjnym przeszukaniu
+                wszyskich krawędzi wierzchołków potomnych
+
+            Metoda polega na przeszukiwaniu w głąb, oznacza to że zanim zbada kolejną krawedź pierwszego węzła
+            dopiero gdy zbada wszystkie krawędzie kolejnego węzła
+            \item A* (A-star)
+                Metoda polega na wybieraniu najbardziej obiecujacego węzła na podstawie heurystyki.
+                \begin{itemize}
+                    \item Heurystyka Hamminga
+                    \item Heurystyka Manhattana
+                \end{itemize}
+        \end{itemize}
+
+    }
+
+    \section{Opis implementacji}
+    {\color{blue}
+    Program został stworzony w języku Python 3.
+    Klasa Board odpowiada za przechowywanie stanu planszy, związanych z nią informacji oraz
+    przemieszczanie elementów planszy.
+    Klasa Solver oraz klasy po niej dziedziczące zawierają logikę odpowiedzalną za rozwiązanie układanki daną metodyką.
+    Klasa Logger odpowiada za zbieraniu dodatkowych informacji, może być połaczona z klasami rozwiązującymi
+    korzystając ze wzorca projektowego obserwatora zaimplemetowanego poprzez klasy ObserverMixin oraz ObservableMixin.
+
+    Powinien się tu również znaleźć diagram UML (diagram klas)
+
+
+    Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
+    między nimi.
+        prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także podać,
+
+
+
+
+    }
+
+    \section{Materiały i metody}
+    {\color{blue}
+    W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
+        których wyniki i dyskusja zamieszczane są w dalszych sekcjach. Opis ten
+        powinien być na tyle dokładny, aby osoba czytająca go potrafiła wszystkie
+    przeprowadzone badania samodzielnie powtórzyć w celu zweryfikowania ich
+    poprawności. Przy opisie należy odwoływać się i stosować do
+    opisanych w sekcji drugiej wzorów i oznaczeń, a także w jasny sposób opisać
+    cel konkretnego testu. Najlepiej byłoby wyraźnie wyszczególnić (ponumerować)
+        poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
+
+    \section{Wyniki}
+    {\color{blue}
+    W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
+        kompletny zestaw wyników w postaci tabel, wykresów (preferowane) itp. Powinny
+    być one tak ponazywane, aby było wiadomo, do czego się odnoszą. Wszystkie
+    tabele i wykresy należy oczywiście opisać (opisać co jest na osiach, w
+    kolumnach itd.) stosując się do przyjętych wcześniej oznaczeń. Nie należy tu
+    komentować i interpretować wyników, gdyż miejsce na to jest w kolejnej sekcji.
+    Tu również dobrze jest wprowadzić oznaczenia (tabel, wykresów), aby móc się do
+    nich odwoływać poniżej.}
+
+    \section{Dyskusja}
+    {\color{blue}
+    Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
+    eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
+    są, rzecz jasna, wnioski o charakterze uniwersalnym, które mogą być istotne
+    przy innych, podobnych zadaniach. Należy również omówić i wyjaśnić wszystkie
+    napotkane problemy (jeśli takie były). Każdy wniosek powinien mieć poparcie we
+    wcześniej przeprowadzonych eksperymentach (odwołania do konkretnych wyników).
+    Jest to jedna z najważniejszych sekcji tego sprawozdania, gdyż prezentuje
+    poziom zrozumienia badanego problemu.}
+
+    \section{Wnioski}
+    {\color{blue}
+    W tej, przedostatniej, sekcji należy zamieścić podsumowanie najważniejszych
+    wniosków z sekcji poprzedniej. Najlepiej jest je po prostu wypunktować. Znów,
+        tak jak poprzednio, najistotniejsze są wnioski o charakterze uniwersalnym.}
+
+    \begin{thebibliography}{0}
+        \bibitem{l2short} T. Oetiker, H. Partl, I. Hyna, E. Schlegl.
+        \textsl{Nie za krótkie wprowadzenie do systemu \LaTeX2e}, 2007, dost\k epny
+        online.
+    \end{thebibliography}
+
+    {\color{blue}
+    Na końcu należy obowiązkowo podać cytowaną w sprawozdaniu literaturę, z której
+    grupa korzystała w trakcie prac nad zadaniem.}
+
+\end{document}
