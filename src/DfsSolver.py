@@ -29,7 +29,7 @@ class DfsSolver(Solver, ObservableMixin):
             return ""
         if depth < self.max_depth:
             available_moves = board.get_available_moves()
-            self.notify("visited", len(available_moves))
+            self.notify("visited", len(available_moves)-1)
             for move in available_moves:
                 if move != prohibited_move:
                     board.move(move)
