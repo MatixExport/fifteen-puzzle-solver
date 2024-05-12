@@ -55,14 +55,13 @@
 
 
     \section{Cel}
-    {\color{blue}
+    {
     Celem zadania było napisanie programu znajdującego rozwiązanie układanki logicznej zwanej "Pietnastką" oraz zbadanie zasad działania
     algorytmów przeszukujących grafy.
     .}
 
     \section{Wprowadzenie}
-    {\color{red}
-
+    {
     Piętnastka to układanka logiczna składająca się z kwadratowej
     planszy podzielonej na 16 kwadratów. Zawierających cyfry od 1 do 15 oraz jednym miejscem które zawsze pozostaje puste
     co pozwala na przesuwanie sąsiednich kafelków, celem piętnastki jest uporządkowanie kafelków tak aby uzyskać układ liczbowy
@@ -101,7 +100,7 @@
     }
 
     \section{Opis implementacji}
-    {\color{blue}
+    {
     Program został stworzony w języku Python 3.
     Klasa Board odpowiada za przechowywanie stanu planszy, związanych z nią informacji oraz
     przemieszczanie elementów planszy.
@@ -109,12 +108,11 @@
     Klasa Logger odpowiada za zbieraniu dodatkowych informacji, może być połaczona z klasami rozwiązującymi
     korzystając ze wzorca projektowego obserwatora zaimplemetowanego poprzez klasy ObserverMixin oraz ObservableMixin.
 
-    Powinien się tu również znaleźć diagram UML (diagram klas)
-    Jest dobry a jak ci się nie podoba to niech se sam zrobi.
+
     \begin{figure}
         \centering
-        \includegraphics{E:\sise\doc\diagram}
-        \caption{}
+        \includegraphics{diagram}
+        \caption{Diagram uml}
         \label{fig:}
     \end{figure}
 
@@ -129,7 +127,7 @@
     }
 
     \section{Materiały i metody}
-    {\color{blue}
+    {
         Do przeprowadzenia eksperymentów użyliśmy skryptów oraz programów dostępnych na Wikampie.
 
     Do przeprowadzenia eksperymentów użyto narzędzi udostępnionycg na platformie WIKAMP,
@@ -146,7 +144,7 @@
     }
 
     \section{Wyniki}
-    {\color{blue}
+    {
     Poniżej przedstawiono tabelę zawierające:
      \begin{itemize}
          \item Dane
@@ -183,12 +181,52 @@
     \end{tabular}
 \end{table}
     }
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-with-dfs}
+    \caption{}
+    \label{fig:1}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-with-dfs}
+    \caption{}
+    \label{fig:2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-solution-lenghts}
+    \caption{}
+    \label{fig:3}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-without-dfs}
+    \caption{}
+    \label{fig:4}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-without-dfs}
+    \caption{}
+    \label{fig:5}
+\end{figure}
 
-
-
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-for-big-grapth}
+    \caption{}
+    \label{fig:6}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-for-big-graph}
+    \caption{}
+    \label{fig:7}
+\end{figure}
 
     \section{Dyskusja}
-    {\color{blue}
+    {
 
     Na podstawie przeprowadzonych badań można wysunąć następujące wnioski:
     \begin{itemize}
@@ -200,8 +238,9 @@
        Różnicę pomiędzy wykorzystanymi heurystykami dla układów z głębokością 1-7 jest znikoma.
         \item Dla układów w odległości 15 od układu początkowego nadal A* okazuje się być najszybszą metodą, odnajdującą najkrótsze rozwiązanie.
         \item Porównując heurystyki Manhattana oraz Hamminga można zauważyć, że Manhattan robi wrażenie dwa razy szybszego.
-        \item Metoda DFS również wygenerowała poprawne wyniki, w przeciwieństwie do metody BFS, która przez konieczność zapamiętywania wszyskich wężłów na danej głębokości
-            zajmuje zbyt wiele miejsca w pamięci operacyjnej aby ukończyć rozwiązywanie zadania.
+        \item Metoda DFS również wygenerowała poprawne wyniki, w przeciwieństwie do metody BFS,
+            która przez konieczność zapamiętywania wszyskich wężłów na danej głębokości
+            nie jest w stanie ukończyć rozwiązywania zadania.
     \end{itemize}
 
 
@@ -215,7 +254,7 @@
     poziom zrozumienia badanego problemu.}
 
     \section{Wnioski}
-    {\color{blue}
+    {
      \begin{itemize}
         \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego.
          \item DFS również był w stanie odnaleźć rozwiązania dla każdego zadanego ułożenia układanki, jednak czas potrzebny na rozwiązanie był znaczie większy,
