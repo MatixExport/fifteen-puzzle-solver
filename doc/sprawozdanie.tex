@@ -154,11 +154,6 @@
             }\label{tab:table2}
         \end{table}
 
-
-
-
-
-
     \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-with-dfs}
@@ -181,9 +176,6 @@
         \caption{Średnia długość rozwiązań i głębokość rekursji  dla odległości od rozwiązania 1-7. }
         \label{fig:3}
     \end{figure}
-
-
-
 
     \begin{figure}[!h]
         \centering
@@ -210,9 +202,7 @@
                     \item{Najgorsze efekty uzyskano przy pomocy metody DFS.
             Objawia się to znacznie dłuższym czasem szukania rozwiązania oraz odjandywaniem rozwiązań losowych a niekoniecznie najkrótszych.}
 
-                    \item{ Metoda BFS zawsze znajduje najkrótsze rozwiazanie, jest to spowodowane sposobem działania metody, która
-
-            sprawdza wszyskie mozliwe układy na zadanej głębokości przed sprawdzeniem kolejnej.}
+                    \item{ Metoda BFS zawsze znajduje najkrótsze rozwiazanie, jest to spowodowane sposobem działania metody, która sprawdza wszyskie mozliwe układy na zadanej głębokości przed sprawdzeniem kolejnej.}
 
                     \item{Metoda A* również zawsze odnajduje najkrótsze rozwiązanie, do tego metoda zdecydowanie najszybicej odnajdywała poprawne rozwiązanie.
             Różnicę pomiędzy wykorzystanymi heurystykami dla układów z głębokością 1-7 jest znikoma.}
@@ -220,12 +210,12 @@
             \item {\textbf{Dla układów z głębokością rozwiązania 15}}
                  \begin{itemize}
 
-                    \item { A* nadal jest najszybszą metodą spośród badanych, odnajdującą najkrótsze rozwiązanie.Dla tej głębokości różnice pomiędzy heurystykami stają się dużo bardziej widoczne, Manhattan jest zdecydowanie bardziej wydajny, osiągając nawet dwukrotnie lepsze wyniki niż Hamming}
+                    \item { A* nadal jest najszybszą metodą spośród badanych, odnajdującą najkrótsze rozwiązanie.Dla tej głębokości różnice pomiędzy heurystykami stają się dużo bardziej widoczne, Manhattan jest zdecydowanie bardziej wydajny, osiągając nawet dwukrotnie lepsze wyniki niż Hamming.}
 
-                    \item{Metoda DFS również wygenerowała poprawne wyniki}
+                    \item{Metoda DFS również wygenerowała poprawne wyniki.}
 
-                    \item{Metoda BFS przez konieczność zapamiętywania wszyskich wężłów na danej głębokości
-            nie jest w stanie ukończyć rozwiązywania zadania (ograniczony rozmiar pamięci operacyjnej)}
+                    \item{Metoda BFS przez konieczność zapamiętywania wszyskich wężłów na danej głębokości.
+            nie jest w stanie ukończyć rozwiązywania zadania (ograniczony rozmiar pamięci operacyjnej).}
                 \end{itemize}
             \end{itemize}
 
