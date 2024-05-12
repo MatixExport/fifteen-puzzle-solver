@@ -42,7 +42,13 @@
         planszy podzielonej na 16 kwadratów. Zawierających cyfry od 1 do 15 oraz jednym miejscem które zawsze pozostaje puste
         co pozwala na przesuwanie sąsiednich kafelków, celem piętnastki jest uporządkowanie kafelków tak aby uzyskać układ liczbowy
         gdzie liczby ułożone są w porządku rosnącym, a ostatnie pole pozostaje puste.
-
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=0.2\textwidth,keepaspectratio]
+            {15}
+            \caption{Rozwiązana piętnastka}
+            \label{fig:Rozwiązana piętnastka}
+        \end{figure}
 
 
 
@@ -71,13 +77,7 @@
                 Heurystyka polega na zliczeniu sumy ruchów, które potrzebuje każdy z kafelków, żeby znależć się na odpowiednim miejscu.
             \end{itemize}
         \end{itemize}
-        \begin{figure}[!ht]
-            \centering
-            \includegraphics[width=0.6\textwidth,keepaspectratio]
-            {15}
-            \caption{Rozwiązana piętnastka}
-            \label{fig:Rozwiązana piętnastka}
-        \end{figure}
+
     }\label{sec:wprowadzenie}
 
     \section{Opis implementacji}
@@ -92,7 +92,7 @@
 
         \begin{figure}[!htb]
             \centering
-            \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagram}
+            \includegraphics[width=0.7\textwidth,keepaspectratio]{diagram}
             \caption{Diagram UML}
             \label{fig:Diagram UML}
         \end{figure}
@@ -111,7 +111,7 @@
         \end{itemize}
         Badania zostały przeprowadzone dla wszystkich metod oraz wszystkich możliwych stanów dla
         głębokości od 1 do 7. Natomiast dla głębokości 15 zbadano przebiegi dla A*(obie heurystki)
-        oraz dla DFS(Kolejność RDUL) dla 20 losowych stanów.
+        oraz dla DFS i BFS(Kolejność RDUL) dla 20 losowych stanów początkowych.
     }\label{sec:materiay-i-metody}
 
     \section{Wyniki}
@@ -131,10 +131,11 @@
                 \begin{tabular}{|l|l|l|l|l|l|}
                     \hline
                     Metoda    & Długość rozwiązania & Odwiedzone stany & Przetworzone stany & Maksymalna & Czas[ms] \\ \hline
-                    DFS       & 17,981              & 594031,750       & 404246,947         & 19,544     & 2649,430 \\ \hline
-                    BFS       & 6,131               & 6586,751         & 2036,173           & 6,131      & 79,030   \\ \hline
-                    A* (hamm) & 6,131               & 24,581& 8,136& 6,131& 0,625\\ \hline
-                    A* (manh) & 6,131               & 24,973& 8,385              & 6,131      & 0,778\\ \hline
+                    DFS   & 17,981 & 594031,750 & 404246,947 & 19,544 & 2649,430 \\ \hline
+
+                    BFS  & 6,131 & 606,231& 284,318& 6,131      & 7,997\\ \hline
+                    A* (hamm) & 6,131   & 24,581& 8,136& 6,131& 0,625\\ \hline
+                    A* (manh) & 6,131  & 24,973& 8,385  & 6,131   & 0,778\\ \hline
                 \end{tabular}
             }\label{tab:table}
         \end{table}
@@ -148,6 +149,7 @@
                     \hline
                     Metoda     & Długość rozwiązania & Odwiedzone stany & Przetworzone stany & Maksymalna & Czas      \\ \hline
                     DFS (RDUL) & 17,700& 5575634,700& 3794514,150& 20,000& 25442,442 \\ \hline
+                    BFS (RDUL)	&15,000	&406733,400	&190923,750	&15,000	&5048,863\\ \hline
                     A* (hamm)  & 15,000& 530,700& 171,050& 15,000& 10,508\\ \hline
                     A* (manh)  & 15,000& 238,250          & 78,850             & 15,050& 6,721\\ \hline
                 \end{tabular}
@@ -200,22 +202,23 @@
                 \begin{itemize}
 
                     \item{Najgorsze efekty uzyskano przy pomocy metody DFS.
-            Objawia się to znacznie dłuższym czasem szukania rozwiązania oraz odjandywaniem rozwiązań losowych a niekoniecznie najkrótszych.}
+            Objawia się to znacznie dłuższym czasem szukania rozwiązania oraz odnajdywaniem niekoniecznie najkrótszych rozwiązań.}
 
                     \item{ Metoda BFS zawsze znajduje najkrótsze rozwiazanie, jest to spowodowane sposobem działania metody, która sprawdza wszyskie mozliwe układy na zadanej głębokości przed sprawdzeniem kolejnej.}
 
-                    \item{Metoda A* również zawsze odnajduje najkrótsze rozwiązanie, do tego metoda zdecydowanie najszybicej odnajdywała poprawne rozwiązanie.
+                    \item{Metoda A* pośród badanych układów startowych również zawsze odnalazła najkrótsze rozwiązanie, do tego metoda zdecydowanie najszybicej odnajdywała poprawne rozwiązanie.
             Różnicę pomiędzy wykorzystanymi heurystykami dla układów z głębokością 1-7 jest znikoma.}
                 \end{itemize}
             \item {\textbf{Dla układów z głębokością rozwiązania 15}}
                  \begin{itemize}
 
-                    \item { A* nadal jest najszybszą metodą spośród badanych, odnajdującą najkrótsze rozwiązanie.Dla tej głębokości różnice pomiędzy heurystykami stają się dużo bardziej widoczne, Manhattan jest zdecydowanie bardziej wydajny, osiągając nawet dwukrotnie lepsze wyniki niż Hamming.}
+                    \item { A* nadal jest najszybszą metodą spośród badanych, odnajdującą najkrótsze rozwiązanie. Dla tej głębokości różnice pomiędzy heurystykami stają się dużo bardziej widoczne, Manhattan jest zdecydowanie bardziej wydajny, osiągając nawet dwukrotnie lepsze wyniki niż Hamming.}
 
-                    \item{Metoda DFS również wygenerowała poprawne wyniki.}
+                    \item{Metoda BFS wygenerowała poprawne wyniki. Czas potrzebny do wygenerowaniu wyniku drastycznie wzrósł, dla głębokości 15 BFS poszukiwał rozwiązania średnio 631 razy dłużej niż dla głębokości 1-7.}
 
-                    \item{Metoda BFS przez konieczność zapamiętywania wszyskich wężłów na danej głębokości.
-            nie jest w stanie ukończyć rozwiązywania zadania (ograniczony rozmiar pamięci operacyjnej).}
+                    \item{Metoda DFS rozwiązała wszystkie zadanie układy, osiągając przy tym podobnie jak dla głębokości 1-7 najgorsze wyniki spośród
+                    wszystkich badanych metod. Warto jednak zaznaczyć że czas potrzebny na rozwiązanie nie wzrósł tak ekstremalnie jak w przypadku BFS, jest to najprawdopodobniej spowodowane tym że BFS musi przeszukać wszystkie poziomy przed poziomem na którym znajduję się rozwiązanie, natomiast DFS  może natrafić na rozwiązanie odrazu lub znaleźć inne które nie jest optymalne pod względem długości. }
+
                 \end{itemize}
             \end{itemize}
 
@@ -224,11 +227,14 @@
     \section{Wnioski}
     {
         \begin{itemize}
-            \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego. Początkowo znikome różnice pomiędzy heurystykami wzrastają wraz z głębokością rozwiązania układanki. Dla dużych głębokości Manhattan jest
+            \item A* okazał się najbardziej uniwersalną oraz optymalną metodą przeszukiwania grafów zarówno dla małych jak i dużych odległości układanek od układu wzorcowego. Początkowo znikome różnice pomiędzy heurystykami wzrastają wraz z głębokością rozwiązania układanki. Dla dużych głębokości Manhattan jest
             znacząco wydajniejszy.
-            \item DFS również był w stanie odnaleźć rozwiązania dla każdego zadanego ułożenia układanki, jednak czas potrzebny na rozwiązanie był znaczie większy,
-            w szczególności, w przypadku, gdy długość najkrótszego rozwiazania była znacznie mniejsza niż zadana głębokość poszukiwań.
-            \item BFS dobrze poradził sobie z przeszukiwaniem układów o małej odległości od układu wzorcowego, jednak dla dużych odległości okazał się zupełnie niezdatny do użytku.
+            \item DFS również był w stanie odnaleźć rozwiązania dla każdego zadanego ułożenia układanki, jednak czas potrzebny na rozwiązanie był nieporównywalnie większy,w szczególności, w przypadku, gdy długość najkrótszego rozwiazania była znacząco mniejsza niż zadana głębokość poszukiwań. Ponadto w przeciwieństwie do innych metod DFS nie gwarantuję znalezienia najkrótszego rozwiązania.
+            \item BFS odnalazł najkrótsze rozwiązanie dla wszystkich badanych układanek. Jednak wraz z głębokością rozwiązania jego wydajność drastycznie spada.
+            \item Jako że BFS i DFS przeszukują cały graf aż do zadanej głębokości to wraz ze wzrostem odległości układu początkowego od wzorcowego ich skuteczność będzie
+            spadać eksponencjalnie. W szczególności tyczy się to BFS który zawsze będzie musiał przeszukać wszystkie poziomy grafu znajdujące się nad poziomem rozwiązania.
+
+
         \end{itemize}
 
 
