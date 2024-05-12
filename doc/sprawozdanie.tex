@@ -33,18 +33,19 @@
     {
         Celem zadania było napisanie programu znajdującego rozwiązanie układanki logicznej zwanej "Pietnastką" oraz zbadanie zasad działania
         algorytmów przeszukujących grafy.
-        .}\label{sec:cel}
+    }\label{sec:cel}
 
     \section{Wprowadzenie}
     {
         Piętnastka to układanka logiczna składająca się z kwadratowej
         planszy podzielonej na 16 kwadratów. Zawierających cyfry od 1 do 15 oraz jednym miejscem które zawsze pozostaje puste
         co pozwala na przesuwanie sąsiednich kafelków, celem piętnastki jest uporządkowanie kafelków tak aby uzyskać układ liczbowy
-        gdzie liczby ułożone są w porządku rosnącym ,a ostatnie pole pozostaje puste
+        gdzie liczby ułożone są w porządku rosnącym, a ostatnie pole pozostaje puste.
 
-        \begin{figure}[!htb]
+        \begin{figure}[!ht]
             \centering
-            \includegraphics{15}
+            \includegraphics[width=0.6\textwidth,keepaspectratio]
+            {15}
             \caption{Rozwiązana piętnastka}
             \label{fig:Rozwiązana piętnastka}
         \end{figure}
@@ -55,20 +56,22 @@
     Inepretacja piętnastki jako grafu pozwala nam stosować metody przeszukiwania grafów do znajdywania rozwiązań układnaki.
     Zaimplementowane przez nas metody to:
         \begin{itemize}
-            \item BFS (breadth-first search) - przeszukiwanie wszerz
+            \item BFS (breadth-first search) - przeszukiwanie wszerz.
+
             Metoda polega na przeszukaniu wszystkich węzłów na jednej głębokości przed zejściem na niższy poziom.
-            \item DFS (depth-first search) - przeszukiwanie wgłąb
-            Metoda polega na preszukaniu wszystkich krawędzi danego wierzchołka dopiero po rekurencyjnym przeszukaniu
-            wszyskich krawędzi wierzchołków potomnych
+            \item DFS (depth-first search) - przeszukiwanie wgłąb.
 
             Metoda polega na przeszukiwaniu w głąb, oznacza to że zanim zbada kolejną krawedź pierwszego węzła
-            dopiero gdy zbada wszystkie krawędzie kolejnego węzła
-            \item A* (A-star)
+            dopiero gdy zbada wszystkie krawędzie kolejnego węzła.
+            \item A* (A-star).
+
             Metoda polega na wybieraniu najbardziej obiecujacego węzła na podstawie heurystyki.
             \begin{itemize}
                 \item Heurystyka Hamminga
+
                 Heurystyka polega na zliczeniu ilości kafelków które nie znajdują się na odpowiednim miejscu.
                 \item Heurystyka Manhattana
+
                 Heurystyka polega na zliczeniu sumy ruchów, które potrzebuje każdy z kafelków, żeby znależć się na odpowiednim miejscu.
             \end{itemize}
         \end{itemize}
@@ -78,10 +81,12 @@
     \section{Opis implementacji}
     {
         Program został stworzony w języku Python 3.
-        Klasa Board odpowiada za przechowywanie stanu planszy, związanych z nią informacji oraz
-    przemieszczanie elementów planszy.
-    Klasa Solver oraz klasy po niej dziedziczące zawierają logikę odpowiedzalną za rozwiązanie układanki daną metodyką.  Klasa Logger odpowiada za zbieraniu dodatkowych informacji, może być połaczona z klasami rozwiązującymi
-    korzystając ze wzorca projektowego obserwatora zaimplemetowanego poprzez klasy ObserverMixin oraz ObservableMixin.
+
+        Klasa Board odpowiada za przechowywanie stanu planszy, związanych z nią informacji oraz przemieszczanie elementów planszy.
+
+    Klasa Solver oraz klasy po niej dziedziczące zawierają logikę odpowiedzalną za rozwiązanie układanki daną metodyką.
+
+    Klasa Logger odpowiada za zbieraniu dodatkowych informacji, może być połaczona z klasami rozwiązującymi korzystając ze wzorca projektowego obserwatora zaimplemetowanego poprzez klasy ObserverMixin oraz ObservableMixin.
 
         \begin{figure}[!htb]
             \centering
@@ -141,67 +146,56 @@
                     \hline
                     Metoda     & Długość rozwiązania & Odwiedzone stany & Przetworzone stany & Maksymalna & Czas      \\ \hline
                     DFS (RDUL) & 17,700& 5575634,700& 3794514,150& 20,000& 25442,442 \\ \hline
-                    A* (hamm)  & 15,000& 530,7& 171,05& 15,00& 10,508\\ \hline
+                    A* (hamm)  & 15,000& 530,700& 171,050& 15,000& 10,508\\ \hline
                     A* (manh)  & 15,000& 238,250          & 78,850             & 15,050& 6,721\\ \hline
                 \end{tabular}
             }\label{tab:table2}
         \end{table}
 
-    }\label{sec:wyniki}
 
-    % \begin{center}
-    % \textbf{Wykresy dla układów z odległością od rozwiązania wynoszącą 1-7}
-    %          \hphantom{4}\\
-    %          \hphantom{4}\\
-    % \end{center}
+
 
 
 
     \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-with-dfs}
-        \caption{}
+        \caption{Średni czas trwania procesu obliczeniowego dla odległości od rozwiązania równej 1-7.}
         \label{fig:1}
-    \end{figure}
-    \begin{figure}[!h]
-        \centering
-        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-with-dfs}
-        \caption{}
-        \label{fig:2}
-    \end{figure}
-    \begin{figure}[!h]
-        \centering
-        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-solution-lenghts}
-        \caption{}
-        \label{fig:3}
     \end{figure}
 
     \begin{figure}[!h]
         \centering
-        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-without-dfs}
-        \caption{}
-        \label{fig:4}
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-with-dfs}
+        \caption{Średnia liczba stanów przetworzonych i odwiedzonych dla odległości od rozwiązania równej 1-7.}
+        \label{fig:2}
     \end{figure}
-    \begin{figure}[!h]
+
+
+
+    \begin{figure}
         \centering
-        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-without-dfs}
-        \caption{}
-        \label{fig:5}
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-solution-lenghts}
+        \caption{Średnia długość rozwiązań i głębokość rekursji  dla odległości od rozwiązania 1-7. }
+        \label{fig:3}
     \end{figure}
+
+
+
 
     \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-for-big-grapth}
-        \caption{}
+        \caption{Średni czas trwania procesu obliczeniowego dla odległości od rozwiązania równej 15.}
         \label{fig:6}
     \end{figure}
     \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-for-big-graph}
-        \caption{}
+        \caption{Średnia liczba stanów przetworzonych i odwiedzonych dla odległości od rozwiązania równej 15.}
         \label{fig:7}
     \end{figure}
-
+  }\label{sec:wyniki}
     \section{Dyskusja}
     {
 
@@ -238,7 +232,7 @@
     \section{Wnioski}
     {
         \begin{itemize}
-            \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego. Początkowo znikome różnice pomiędzy heurystykami wzrastają wraz z głębokością rozwiązania układanki. Dla dużych głębokości Manhattan jest 
+            \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego. Początkowo znikome różnice pomiędzy heurystykami wzrastają wraz z głębokością rozwiązania układanki. Dla dużych głębokości Manhattan jest
             znacząco wydajniejszy.
             \item DFS również był w stanie odnaleźć rozwiązania dla każdego zadanego ułożenia układanki, jednak czas potrzebny na rozwiązanie był znaczie większy,
             w szczególności, w przypadku, gdy długość najkrótszego rozwiazania była znacznie mniejsza niż zadana głębokość poszukiwań.
@@ -246,15 +240,13 @@
         \end{itemize}
 
 
-     
+
     }\label{sec:wnioski}
 
     \begin{thebibliography}{0}
-        \bibitem{l2short} T. Oetiker, H. Partl, I. Hyna, E. Schlegl.
-        \textsl{Nie za krótkie wprowadzenie do systemu \LaTeX2e}, 2007, dost\k epny
-        online.
+        \bibitem{l2short}
+        \textsl{https://personal.math.ubc.ca/~cass/courses/m308-02b/projects/grant/fifteen.html}
     \end{thebibliography}
 
 
 \end{document}
-15,059,109     
