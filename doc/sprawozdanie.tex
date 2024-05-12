@@ -37,18 +37,14 @@
 
     \section{Wprowadzenie}
     {
-        Piętnastka to układanka logiczna składająca się z kwadratowej
+
+     Piętnastka to układanka logiczna składająca się z kwadratowej
         planszy podzielonej na 16 kwadratów. Zawierających cyfry od 1 do 15 oraz jednym miejscem które zawsze pozostaje puste
         co pozwala na przesuwanie sąsiednich kafelków, celem piętnastki jest uporządkowanie kafelków tak aby uzyskać układ liczbowy
         gdzie liczby ułożone są w porządku rosnącym, a ostatnie pole pozostaje puste.
 
-        \begin{figure}[!ht]
-            \centering
-            \includegraphics[width=0.6\textwidth,keepaspectratio]
-            {15}
-            \caption{Rozwiązana piętnastka}
-            \label{fig:Rozwiązana piętnastka}
-        \end{figure}
+
+
 
         Piętnastkę można zinterpretować jako graf, gdzie danym węzłem jest stan planszy. Natomiast krawędzie łączące węzły
     reprezentują możliwe ruchy pomiędzy stanami. Korzeniem w takim grafie będzie początkowy nierozwiązany stan układanki.
@@ -75,7 +71,13 @@
                 Heurystyka polega na zliczeniu sumy ruchów, które potrzebuje każdy z kafelków, żeby znależć się na odpowiednim miejscu.
             \end{itemize}
         \end{itemize}
-
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=0.6\textwidth,keepaspectratio]
+            {15}
+            \caption{Rozwiązana piętnastka}
+            \label{fig:Rozwiązana piętnastka}
+        \end{figure}
     }\label{sec:wprowadzenie}
 
     \section{Opis implementacji}
