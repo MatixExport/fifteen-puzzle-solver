@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{graphicx}
+\usepackage[section]{placeins}
 
 \DeclareUnicodeCharacter{00A0}{~}
 
@@ -24,34 +25,8 @@
 \begin{document}
     \maketitle
 
-    {\color{blue}
-    Klasa sprawozdania wymaga następujących pakietów:
-        \begin{itemize}
-            \item zestaw klas autorstwa Marcina Woli\'nskiego \ppauza u\.zywana jest klasa
-            \emph{mwart} (nazwa całego pakietu: \emph{mwcls}),
-            \item pakiet \emph{polski},
-            \item pakiet \emph{url}.
-        \end{itemize}}
 
 
-%{\color{blue}
-%W preambule należy wykorzystać następujące niestandardowe polecenia, aby
-%dostarczyć informacje wymagane do wygenerowania sprawozdania:
-%\begin{itemize}
-%    \item \verb+\studycycle{...}+ \ppauza tryb i rodzaj studiów,
-%    \item \verb+\coursesemester{...}+ \ppauza semestr studiów,
-%    \item \verb+\coursename{...}+ \ppauza nazwa przedmiotu,
-%    \item \verb+\courseyear{...}+ \ppauza bieżący rok akademicki,
-%    \item \verb+\courseteacher{...}+ \ppauza prowadzący laboratoria (proszę
-%    wpisywać osobę, której oddaje się sprawozdanie, a nie kierownika
-%    przedmiotu!),
-%    \item \verb+\coursegroup{...}+ \ppauza identyfikator grupy ćwiczeniowej,
-%    \item \verb+\studentinfo[e-mail]{imię i nazwisko}{nr albumu}+ \ppauza
-%    polecenie wykorzystywane \emph{tylko} w obrębie polecenia \verb+\author+
-%    służy do określenia imienia i nazwiska każdego z autorów, jak również
-%    numeru albumu i opcjonalnie adresu e\dywiz mail; jeśli adres nie jest
-%    podawany, należy pominąć argument opcjonalny.
-%\end{itemize}}
 
 
     \section{Cel}
@@ -65,9 +40,9 @@
         Piętnastka to układanka logiczna składająca się z kwadratowej
         planszy podzielonej na 16 kwadratów. Zawierających cyfry od 1 do 15 oraz jednym miejscem które zawsze pozostaje puste
         co pozwala na przesuwanie sąsiednich kafelków, celem piętnastki jest uporządkowanie kafelków tak aby uzyskać układ liczbowy
-    gdzie liczby ułożone są w porządku rosnącym ,a ostatnie pole pozostaje puste.
+        gdzie liczby ułożone są w porządku rosnącym ,a ostatnie pole pozostaje puste
 
-        \begin{figure}
+        \begin{figure}[!htb]
             \centering
             \includegraphics{15}
             \caption{Rozwiązana piętnastka}
@@ -75,7 +50,7 @@
         \end{figure}
 
         Piętnastkę można zinterpretować jako graf, gdzie danym węzłem jest stan planszy. Natomiast krawędzie łączące węzły
-    reprezentują możliwe ruchy pomiędzy stanami. Korzeniem w takim grafie będzie początkowy nieroziązany stan układanki.
+    reprezentują możliwe ruchy pomiędzy stanami. Korzeniem w takim grafie będzie początkowy nierozwiązany stan układanki.
 
     Inepretacja piętnastki jako grafu pozwala nam stosować metody przeszukiwania grafów do znajdywania rozwiązań układnaki.
     Zaimplementowane przez nas metody to:
@@ -105,73 +80,59 @@
         Program został stworzony w języku Python 3.
         Klasa Board odpowiada za przechowywanie stanu planszy, związanych z nią informacji oraz
     przemieszczanie elementów planszy.
-    Klasa Solver oraz klasy po niej dziedziczące zawierają logikę odpowiedzalną za rozwiązanie układanki daną metodyką.
-    Klasa Logger odpowiada za zbieraniu dodatkowych informacji, może być połaczona z klasami rozwiązującymi
+    Klasa Solver oraz klasy po niej dziedziczące zawierają logikę odpowiedzalną za rozwiązanie układanki daną metodyką.  Klasa Logger odpowiada za zbieraniu dodatkowych informacji, może być połaczona z klasami rozwiązującymi
     korzystając ze wzorca projektowego obserwatora zaimplemetowanego poprzez klasy ObserverMixin oraz ObservableMixin.
 
-
-        \begin{figure}
+        \begin{figure}[!htb]
             \centering
             \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagram}
-            \caption{Diagram uml}
-            \label{fig:Diagram uml}
+            \caption{Diagram UML}
+            \label{fig:Diagram UML}
         \end{figure}
+     \label{sec:opis-implementacji}}
 
-
-        Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
-        między nimi.
-        prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także podać,
-
-
-
-
-    }\label{sec:opis-implementacji}
 
     \section{Materiały i metody}
     {
-        Do przeprowadzenia eksperymentów użyliśmy skryptów oraz programów dostępnych na Wikampie.
-
-        Do przeprowadzenia eksperymentów użyto narzędzi udostępnionycg na platformie WIKAMP,
+        Do przeprowadzenia eksperymentów użyto narzędzi udostępnionych na platformie WIKAMP,
         zostały wykorzystane przy:
         \begin{itemize}
             \item Generowaniu stanów układanek do rozwiązania
-            \item \item Uruchamianiu wykonanego programu dla wygenerowanych układanek
+            \item Uruchamianiu wykonanego programu dla wygenerowanych układanek
             \item Weryfikacji poprawności rozwiązań
             \item Podsumowaniu wyników
         \end{itemize}
-        Badania zostały przeprowadzone dla wszystkich metod oraz możliwych stanów dla
+        Badania zostały przeprowadzone dla wszystkich metod oraz wszystkich możliwych stanów dla
         głębokości od 1 do 7. Natomiast dla głębokości 15 zbadano przebiegi dla A*(obie heurystki)
-        oraz dla DFS(Kolejność RDUL).
+        oraz dla DFS(Kolejność RDUL) dla 20 losowych stanów.
     }\label{sec:materiay-i-metody}
 
     \section{Wyniki}
     {
-        Poniżej przedstawiono tabelę zawierające:
-        \begin{itemize}
-            \item Dane
+        Poniżej przedstawiono tabelę zawierające podsumowanie danych
+        zebranych podczas rozwiązanywania przez program układów dla kolejno:
+         \begin{itemize}
+            \item Głębokości 1-7
+            \item Głębokości 15
         \end{itemize}
-        Oraz wykresy zawierające
-        \begin{itemize}
-            \item Dane
-        \end{itemize}
-
+        Oraz wygenerowane na podstawie tych tabel wykresy.
 
         \begin{table}[!ht]
             \centering
-            \caption{Średnie wyników dla poszczególnych metod}
+            \caption{Średnie wyników dla poszczególnych metod z głębokością 1-7.}
             \resizebox{\columnwidth}{!}{
                 \begin{tabular}{|l|l|l|l|l|l|}
                     \hline
                     Metoda    & Długość rozwiązania & Odwiedzone stany & Przetworzone stany & Maksymalna & Czas[ms] \\ \hline
                     DFS       & 17,981              & 594031,750       & 404246,947         & 19,544     & 2649,430 \\ \hline
                     BFS       & 6,131               & 6586,751         & 2036,173           & 6,131      & 79,030   \\ \hline
-                    A* (hamm) & 6,131               & 1627,387         & 552,886            & 11,058     & 0,853    \\ \hline
-                    A* (manh) & 6,131               & 24,973           & 8,385              & 6,131      & 0,821    \\ \hline
+                    A* (hamm) & 6,131               & 24,581& 8,136& 6,131& 0,625\\ \hline
+                    A* (manh) & 6,131               & 24,973& 8,385              & 6,131      & 0,778\\ \hline
                 \end{tabular}
             }\label{tab:table}
         \end{table}
 
-
+        \hphantom{4}
         \begin{table}[!ht]
             \centering
             \caption{Średnie wyników dla poszczególnych metod dla układanek z głębokością 15.}
@@ -179,51 +140,62 @@
                 \begin{tabular}{|l|l|l|l|l|l|}
                     \hline
                     Metoda     & Długość rozwiązania & Odwiedzone stany & Przetworzone stany & Maksymalna & Czas      \\ \hline
-                    DFS (RDUL) & 17,700              & 5575634,700      & 3794514,150        & 20,000     & 25442,442 \\ \hline
-                    A* (hamm)  & 15,000              & 519618,550       & 173832,600         & 22,900     & 12693,780 \\ \hline
-                    A* (manh)  & 15,000              & 238,250          & 78,850             & 15,050     & 9,109     \\ \hline
+                    DFS (RDUL) & 17,700& 5575634,700& 3794514,150& 20,000& 25442,442 \\ \hline
+                    A* (hamm)  & 15,000& 530,7& 171,05& 15,00& 10,508\\ \hline
+                    A* (manh)  & 15,000& 238,250          & 78,850             & 15,050& 6,721\\ \hline
                 \end{tabular}
             }\label{tab:table2}
         \end{table}
+
     }\label{sec:wyniki}
-    \begin{figure}
+
+    % \begin{center}
+    % \textbf{Wykresy dla układów z odległością od rozwiązania wynoszącą 1-7}
+    %          \hphantom{4}\\
+    %          \hphantom{4}\\
+    % \end{center}
+
+
+
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-with-dfs}
         \caption{}
         \label{fig:1}
     \end{figure}
-    \begin{figure}
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-with-dfs}
         \caption{}
         \label{fig:2}
     \end{figure}
-    \begin{figure}
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-solution-lenghts}
         \caption{}
         \label{fig:3}
     \end{figure}
-    \begin{figure}
+
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-without-dfs}
         \caption{}
         \label{fig:4}
     \end{figure}
-    \begin{figure}
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-without-dfs}
         \caption{}
         \label{fig:5}
     \end{figure}
 
-    \begin{figure}
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-time-for-big-grapth}
         \caption{}
         \label{fig:6}
     \end{figure}
-    \begin{figure}
+    \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{average-count-of-visited-for-big-graph}
         \caption{}
@@ -234,43 +206,47 @@
     {
 
         Na podstawie przeprowadzonych badań można wysunąć następujące wnioski:
-        \begin{itemize}
-            \item Dla układów w odległościach 1-7 od układu wzorcowego zdecydowanie najgorsze efekty uzyskano przy pomocy metody DFS.
-            Objawia się to znacznie dłuższym czasem szukania rozwiązania oraz odjandywaniem rozwiązań losowych a niekoniecznie najkrótszych.
-            \item Metoda BFS zawsze znajduje najkrótsze rozwiazanie, jest to spowodowane sposobem działania metody, która
-            sprawdza wszyskie mozliwe układy na zadanej głębokości przed sprawdzeniem kolejnej.
-            \item Metoda A* również zawsze odnajduje najkrótsze rozwiązanie, do tego metoda zdecydowanie najszybicej odnajdywała poprawne rozwiązanie.
-            Różnicę pomiędzy wykorzystanymi heurystykami dla układów z głębokością 1-7 jest znikoma.
-            \item Dla układów w odległości 15 od układu początkowego nadal A* okazuje się być najszybszą metodą, odnajdującą najkrótsze rozwiązanie.
-            \item Porównując heurystyki Manhattana oraz Hamminga można zauważyć, że Manhattan robi wrażenie dwa razy szybszego.
-            \item Metoda DFS również wygenerowała poprawne wyniki, w przeciwieństwie do metody BFS,
-            która przez konieczność zapamiętywania wszyskich wężłów na danej głębokości
-            nie jest w stanie ukończyć rozwiązywania zadania.
-        \end{itemize}
+         \begin{itemize}
+         \setlength\itemsep{1em}
+            \item {\textbf{Dla układów z głębokością rozwiązania 1-7}}
+                \begin{itemize}
 
+                    \item{Najgorsze efekty uzyskano przy pomocy metody DFS.
+            Objawia się to znacznie dłuższym czasem szukania rozwiązania oraz odjandywaniem rozwiązań losowych a niekoniecznie najkrótszych.}
 
-        Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
-        eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
-        są, rzecz jasna, wnioski o charakterze uniwersalnym, które mogą być istotne
-    przy innych, podobnych zadaniach. Należy również omówić i wyjaśnić wszystkie
-    napotkane problemy (jeśli takie były). Każdy wniosek powinien mieć poparcie we
-    wcześniej przeprowadzonych eksperymentach (odwołania do konkretnych wyników).
-    Jest to jedna z najważniejszych sekcji tego sprawozdania, gdyż prezentuje
-    poziom zrozumienia badanego problemu.}\label{sec:dyskusja}
+                    \item{ Metoda BFS zawsze znajduje najkrótsze rozwiazanie, jest to spowodowane sposobem działania metody, która
+
+            sprawdza wszyskie mozliwe układy na zadanej głębokości przed sprawdzeniem kolejnej.}
+
+                    \item{Metoda A* również zawsze odnajduje najkrótsze rozwiązanie, do tego metoda zdecydowanie najszybicej odnajdywała poprawne rozwiązanie.
+            Różnicę pomiędzy wykorzystanymi heurystykami dla układów z głębokością 1-7 jest znikoma.}
+                \end{itemize}
+            \item {\textbf{Dla układów z głębokością rozwiązania 15}}
+                 \begin{itemize}
+
+                    \item { A* nadal jest najszybszą metodą spośród badanych, odnajdującą najkrótsze rozwiązanie.Dla tej głębokości różnice pomiędzy heurystykami stają się dużo bardziej widoczne, Manhattan jest zdecydowanie bardziej wydajny, osiągając nawet dwukrotnie lepsze wyniki niż Hamming}
+
+                    \item{Metoda DFS również wygenerowała poprawne wyniki}
+
+                    \item{Metoda BFS przez konieczność zapamiętywania wszyskich wężłów na danej głębokości
+            nie jest w stanie ukończyć rozwiązywania zadania (ograniczony rozmiar pamięci operacyjnej)}
+                \end{itemize}
+            \end{itemize}
+
+      }\label{sec:dyskusja}
 
     \section{Wnioski}
     {
         \begin{itemize}
-            \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego.
+            \item A* okazał się najbardziej uniwersalną oraz optmalną metodą przeszukiwania grafów zarówno dla małych jak i duzych odległości układanek od układu wzorcowego. Początkowo znikome różnice pomiędzy heurystykami wzrastają wraz z głębokością rozwiązania układanki. Dla dużych głębokości Manhattan jest 
+            znacząco wydajniejszy.
             \item DFS również był w stanie odnaleźć rozwiązania dla każdego zadanego ułożenia układanki, jednak czas potrzebny na rozwiązanie był znaczie większy,
             w szczególności, w przypadku, gdy długość najkrótszego rozwiazania była znacznie mniejsza niż zadana głębokość poszukiwań.
-            \item BFS dobrze poradził sobie z przeszukiwaniem układów o małej odległości od układu wzorcowego, jednak dla dużych odległości okazał się zupełnie bezużyteczny.
+            \item BFS dobrze poradził sobie z przeszukiwaniem układów o małej odległości od układu wzorcowego, jednak dla dużych odległości okazał się zupełnie niezdatny do użytku.
         \end{itemize}
 
 
-        W tej, przedostatniej, sekcji należy zamieścić podsumowanie najważniejszych
-    wniosków z sekcji poprzedniej. Najlepiej jest je po prostu wypunktować. Znów,
-        tak jak poprzednio, najistotniejsze są wnioski o charakterze uniwersalnym.
+     
     }\label{sec:wnioski}
 
     \begin{thebibliography}{0}
@@ -281,3 +257,4 @@
 
 
 \end{document}
+15,059,109     
