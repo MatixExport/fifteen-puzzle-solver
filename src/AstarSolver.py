@@ -8,17 +8,14 @@ from ObservableMixin import ObservableMixin
 from Solver import Solver
 
 
-class AstarSolver(Solver, ObservableMixin):
+class AstarSolver(Solver):
 
     def __init__(self, board=None, heuristic=None):
-        super().__init__()
+        super().__init__(board)
         self.board = board
         self.heuristic = heuristic
         if self.heuristic is None:
             self.heuristic = AstarSolver.manhattan_dist
-
-    def set_board(self, board):
-        self.board = board
 
     def set_heuristic(self, heuristic):
         self.heuristic = heuristic
@@ -28,7 +25,7 @@ class AstarSolver(Solver, ObservableMixin):
         wrong = 0
         for row in range(board.height):
             for column in range(board.width):
-                if board.table[row][column] != row * board.width + column+1:
+                if board.table[row][column] != row * board.width + column + 1:
                     wrong += 1
         return wrong
 
@@ -81,7 +78,7 @@ class AstarSolver(Solver, ObservableMixin):
                     if (neighbour_tuple not in gscore) or (neighbour_gscore < gscore[neighbour_tuple]):
                         gscore[neighbour_tuple] = neighbour_gscore
                         path = current_tuple[2] + move
-                        self.notify("depth",len(path))
+                        self.notify("depth", len(path))
                         open_set.put((neighbour_gscore + h(board), neighbour_tuple, path))
                     board.reverse_move(move)
             board.set_table(np.asarray(current_board))

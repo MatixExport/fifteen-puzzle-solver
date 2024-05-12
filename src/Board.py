@@ -11,7 +11,6 @@ class Board:
     def __init__(self):
         self.width = 0
         self.height = 0
-        self.iteration = 0
         self.table = None
         self.order_str = "UDLR"
         self.empty_field_index = Index(0, 0)
@@ -28,12 +27,6 @@ class Board:
             "D": "U"
 
         }
-
-    def generate_random(self):
-        self.table = np.arange(self.width * self.height)
-        random.shuffle(self.table)
-        self.table = np.reshape(self.table, (self.height, self.width))
-        self.find_empty_index()
 
     def set_order(self, order_str):
         self.order_str = str.upper(order_str)

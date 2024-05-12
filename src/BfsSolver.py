@@ -2,20 +2,14 @@ from collections import deque
 
 import numpy as np
 
-from Index import Index
-from ObservableMixin import ObservableMixin
 from Solver import Solver
 
 
-class BfsSolver(Solver, ObservableMixin):
+class BfsSolver(Solver):
 
     def __init__(self, board=None, max_depth=15):
-        super().__init__()
-        self.board = board
+        super().__init__(board)
         self.max_depth = max_depth
-
-    def set_board(self, board):
-        self.board = board
 
     def set_max_depth(self, depth):
         self.max_depth = depth
