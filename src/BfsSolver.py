@@ -52,13 +52,15 @@ class BfsSolver(Solver):
                 return False
 
             for letter in board.get_all_moves():
-                if board.move(letter):
-                    self.notify("visited", 1)
-                    que.append((self.table_as_tuple(board), og_tab[1] + letter))
-                    board.reverse_move(letter)
+                if board.reverse_letter(letter) != og_tab[1][-1]:
+                    if board.move(letter):
+                        self.notify("visited", 1)
+                        que.append((self.table_as_tuple(board), og_tab[1] + letter))
+                        board.reverse_move(letter)
 
             if depth_increased:
                 upper_level_nodes = len(que)
                 depth_increased = False
+
 
             board.table = np.asarray(og_tab[0])
