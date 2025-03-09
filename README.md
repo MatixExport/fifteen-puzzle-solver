@@ -74,7 +74,6 @@ $ python main.py --help
 
 ## License
 
-MIT
-
+Apache-2.0
 
 
