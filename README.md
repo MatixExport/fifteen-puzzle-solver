@@ -15,7 +15,7 @@ ______ _  __ _                   ______              _        _____       _
 
 
 <p align="center">
-	<img src="https://img.shields.io/badge/Python-3776AB.svg?style=flat-square&logo=Python&logoColor=white" alt="Python">
+	<img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python">
 </p>
 
 <p align="center">
